@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--
+   spring管理 Mybatis对象
+      1.	数据库连接池以及事务管理都交给Spring容器来完成
+      -->
+
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--
+    配置数据库连接池
+
+    Druid连接池
+    -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--
+    2.	SqlSessionFactory对象应该放到Spring容器中 单例对象管理
+    -->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean"
+          id="sqlSessionFactory">
+        <property name="dataSource" ref="dataSource"/>
+        <!--
+           需要读取配置文件中的信息 解析 并且将信息保存在configrution对象 存到SqlSessionFactory中
+        -->
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"/>
+        <!--<property name="typeAliasesPackage" value="site.madai.pojo"/>-->
+    </bean>
+
+    <!--
+      3.	Mapper动态代理对象交给Spring管理，我们从Spring容器中直接获得Mapper的代理对象
+    -->
+    <!--
+          配置一个bean 作用用来扫描 Mapper接口的  mapper扫描配置器
+        -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--
+          需要 sqlsesionFactory 产生sqlSession
+        -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="site.madai.dao"/>
+    </bean>
+</beans>
