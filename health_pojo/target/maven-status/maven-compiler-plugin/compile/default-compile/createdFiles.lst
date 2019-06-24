@@ -1,0 +1,13 @@
+site/madai/entity/Result.class
+site/madai/pojo/CheckItem.class
+site/madai/pojo/Permission.class
+site/madai/pojo/CheckGroup.class
+site/madai/entity/QueryPageBean.class
+site/madai/entity/PageResult.class
+site/madai/pojo/User.class
+site/madai/pojo/Member.class
+site/madai/pojo/Setmeal.class
+site/madai/pojo/Menu.class
+site/madai/pojo/OrderSetting.class
+site/madai/pojo/Order.class
+site/madai/pojo/Role.class
