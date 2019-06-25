@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="../plugins/elementui/index.css">
         <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/fx.css">
     </head>
     <body class="hold-transition">
         <div id="app">
@@ -28,8 +29,10 @@
                     <div class="filter-container">
                         <el-input placeholder="项目编码/项目名称" v-model="pagination.queryString" style="width: 200px;" class="filter-item"></el-input>
                         <el-button @click="findPage()" class="dalfBut">查询</el-button>
-                        <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
+                        <el-button type="primary" class="butT btn-fx-bubble"
+                                   @click="handleCreate()">新建</el-button>
                     </div>
+                    <template v-if="dataList != null">
                     <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
                         <el-table-column type="index" align="center" label="序号"></el-table-column>
                         <el-table-column prop="code" label="项目编码" align="center"></el-table-column>
@@ -48,6 +51,14 @@
                             </template>
                         </el-table-column>
                     </el-table>
+                    </template>
+                    <template v-else>
+                        <div align="center">
+                            <svg class="fx-wait-icon-red-circle-svg-dash-svg" viewBox="25 25 50 50">
+                                <circle class="fx-wait-icon-red-circle-svg-dash-circle" cx="50" cy="50" r="20"></circle>
+                            </svg>
+                        </div>
+                    </template>
                     <div class="pagination-container">
                         <el-pagination
                             class="pagiantion"
@@ -214,7 +225,7 @@
 					  total:0,//总记录数
 					  queryString:null//查询条件
 				},
-				dataList: [],//当前页要展示的分页列表数据
+				dataList: null,//当前页要展示的分页列表数据
                 formData: {},//表单数据
                 dialogFormVisible: false,//增加表单是否可见
                 dialogFormVisible4Edit:false,//编辑表单是否可见
@@ -305,6 +316,7 @@
                 //分页查询
                 findPage() {
                     //分⻚参数
+                    this.dataList = null;
                     var param = {
                         currentPage:this.pagination.currentPage, //⻚码
                         pageSize:this.pagination.pageSize, //每⻚显示的记录数
