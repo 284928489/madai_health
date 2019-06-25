@@ -11,6 +11,8 @@ import site.madai.entity.Result;
 import site.madai.pojo.CheckItem;
 import site.madai.service.CheckItemService;
 
+import java.util.List;
+
 /**
  * @Project: site.madai.controller
  * @Author: ShaoDi Wang
@@ -67,5 +69,17 @@ public class CheckItemController {
             e.printStackTrace();
             return new Result(true, MessageConstant.DELETE_CHECKITEM_FAIL);
         }
+    }
+
+    //查询所有
+    @RequestMapping("/findAll")
+    public Result findAll(){
+        List<CheckItem> checkItemList = checkItemService.findAll();
+        if(checkItemList != null && checkItemList.size() > 0){
+            Result result = new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS);
+            result.setData(checkItemList);
+            return result;
+        }
+        return new Result(false,MessageConstant.QUERY_CHECKITEM_FAIL);
     }
 }

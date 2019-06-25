@@ -141,6 +141,14 @@
                     <!-- 编辑标签弹层 -->
                     <div class="add-form">
                         <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit">
+                          <template v-if="formData_isload == true">
+                            <div align="center">
+                              <svg class="fx-wait-icon-red-circle-svg-dash-svg" viewBox="25 25 50 50">
+                                <circle class="fx-wait-icon-red-circle-svg-dash-circle" cx="50" cy="50" r="20"></circle>
+                              </svg>
+                            </div>
+                          </template>
+                          <template v-else>
                             <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
                                 <el-row>
                                     <el-col :span="12">
@@ -204,6 +212,7 @@
                                 <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
                                 <el-button type="primary" @click="handleEdit()">确定</el-button>
                             </div>
+                          </template>
                         </el-dialog>
                     </div>
                 </div>
@@ -220,21 +229,22 @@
             el: '#app',
             data:{
                 pagination: {//分页相关模型数据
-					  currentPage: 1,//当前页码
-					  pageSize:7,//每页显示的记录数
-					  total:0,//总记录数
-					  queryString:null//查询条件
-				},
-				dataList: null,//当前页要展示的分页列表数据
-                formData: {},//表单数据
-                dialogFormVisible: false,//增加表单是否可见
-                dialogFormVisible4Edit:false,//编辑表单是否可见
-                rules: {//校验规则
-                    code: [{ required: true, message: '项目编码为必填项', trigger: 'blur' }],
-                    name: [{ required: true, message: '项目名称为必填项', trigger:
-                            'blur' }],
-                    sex: [{ required: true, message: "适用性别为必填项", trigger:
-                            'change'}]
+    					  currentPage: 1,//当前页码
+    					  pageSize:7,//每页显示的记录数
+    					  total:0,//总记录数
+    					  queryString:null//查询条件
+    				},
+    				dataList: null,//当前页要展示的分页列表数据
+            formData: {},//表单数据
+            formData_isload: false,
+            dialogFormVisible: false,//增加表单是否可见
+            dialogFormVisible4Edit:false,//编辑表单是否可见
+            rules: {//校验规则
+                code: [{ required: true, message: '项目编码为必填项', trigger: 'blur' }],
+                name: [{ required: true, message: '项目名称为必填项', trigger:
+                        'blur' }],
+                sex: [{ required: true, message: "适用性别为必填项", trigger:
+                        'change'}]
                 }
             },
             //钩子函数，VUE对象初始化完成后自动执行
@@ -262,10 +272,12 @@
                                         type:"error"
                                     });
                                 }
-                                this.findPage();
-                                this.dialogFormVisible4Edit = false;
                             }).catch((err)=>{
+                                this.$message.error("unkown error! =>"+err);
                                 console.log(err);
+                            }).finally(()=>{
+                                this.dialogFormVisible4Edit = false;
+                                this.findPage();
                             });
                             // 后端:修改检查项，
                             // 前端：重新查询，修改成功/失败的弹出窗口,关闭窗口
@@ -301,10 +313,13 @@
                                         type: 'error'
                                     });
                                 }
+                            }).catch((err)=>{
+                                this.$message.error("unkown error! =>"+err);
+                                console.log(err);
+                            }).finally(()=>{
                                 //6. 关闭弹出框
                                 this.dialogFormVisible = false;
-                            }).catch((err)=>{
-                                console.log(err);
+                                this.findPage();
                             });
 
                         }else{
@@ -340,6 +355,7 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
+                    this.formData_isload = true;
                     //0. 清空表单
                     this.resetForm();
                     //1. 弹出编辑窗口
@@ -349,6 +365,7 @@
                     axios.get("/checkitem/findById.do?id="+id).then((res)=>{
                         //3. 数据回显
                         this.formData = res.data.data;
+                        this.formData_isload = false;
                     }).catch((err)=>{
                         console.log(err);
                     });
@@ -385,6 +402,7 @@
                             //4. 查询
                             this.findPage();
                         }).catch((err)=>{
+                            this.$message.error("unkown error =>" + err);
                             console.log(err);
                         });
 

@@ -12,6 +12,8 @@ import site.madai.entity.QueryPageBean;
 import site.madai.pojo.CheckItem;
 import site.madai.service.CheckItemService;
 
+import java.util.List;
+
 /**
  * @Project: site.madai.service.Impl
  * @Author: ShaoDi Wang
@@ -55,5 +57,10 @@ public class CheckItemServiceImpl implements CheckItemService {
     @Override
     public void delById(Integer id) {
         checkItemDao.delById(id);
+    }
+
+    @Override
+    public List<CheckItem> findAll() {
+        return checkItemDao.findAll();
     }
 }

@@ -4,6 +4,8 @@ import site.madai.entity.PageResult;
 import site.madai.entity.QueryPageBean;
 import site.madai.pojo.CheckItem;
 
+import java.util.List;
+
 /**
  * @Project: site.madai.service
  * @Author: ShaoDi Wang
@@ -22,4 +24,6 @@ public interface CheckItemService {
     void update(CheckItem checkItem);
 
     void delById(Integer id);
+
+    List<CheckItem> findAll();
 }

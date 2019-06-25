@@ -3,6 +3,8 @@ package site.madai.dao;
 import com.github.pagehelper.Page;
 import site.madai.pojo.CheckItem;
 
+import java.util.List;
+
 /**
  * @Project: site.madai.dao
  * @Author: ShaoDi Wang
@@ -21,4 +23,6 @@ public interface CheckItemDao {
     void update(CheckItem checkItem);
 
     void delById(Integer id);
+
+    List<CheckItem> findAll();
 }
