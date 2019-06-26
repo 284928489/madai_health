@@ -26,9 +26,13 @@ public interface CheckGroupDao {
 
     List<Integer> findCheckItemIdsByCheckGroupId(Integer id);
 
-    void deleteAssociation(Integer id);
+    void deleteAssociationFrom_T_checkgroup_checkitemByCheckgroupid(Integer id);
 
     void edit(CheckGroup checkGroup);
 
     void deleteCheckgroupById(Integer id);
+
+    long getCheckgroupidCountFrom_T_setmeal_checkgroup(Integer id);
+
+    long getCheckgroupidCountFrom_T_checkgroup_checkitem(Integer id);
 }

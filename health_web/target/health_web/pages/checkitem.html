@@ -230,7 +230,7 @@
             data:{
                 pagination: {//分页相关模型数据
     					  currentPage: 1,//当前页码
-    					  pageSize:10,//每页显示的记录数
+    					  pageSize:7,//每页显示的记录数
     					  total:0,//总记录数
     					  queryString:null//查询条件
     				},
@@ -261,17 +261,11 @@
                             axios.post("/checkitem/update.do", this.formData).then((res)=>{
                                 // 后端:修改检查项，
                                 // 前端：重新查询，修改成功/失败的弹出窗口,关闭窗口
-                                if(res.data.flag){
                                     this.$message({
                                         message: res.data.message,
-                                        type:"success"
+                                        type: res.data.flag ? "success" :
+                                            "error"
                                     });
-                                }else{
-                                    this.$message({
-                                        message: res.data.message,
-                                        type:"error"
-                                    });
-                                }
                             }).catch((err)=>{
                                 this.$message.error("unkown error! =>"+err);
                                 console.log(err);
@@ -302,17 +296,10 @@
                                 //4. 刷新页面， 重新查询数据
                                 this.findPage();
                                 //5. 提示 操作成功/失败的信息
-                                if(res.data.flag){
                                     this.$message({
                                         message: res.data.message,
-                                        type: 'success'
+                                        type: res.data.flag ? 'success': 'error'
                                     });
-                                }else{
-                                    this.$message({
-                                        message:res.data.message,
-                                        type: 'error'
-                                    });
-                                }
                             }).catch((err)=>{
                                 this.$message.error("unkown error! =>"+err);
                                 console.log(err);
@@ -388,17 +375,10 @@
                         //2. 确认： 删除
                         // 发送ajax请求，根据id删除
                         axios.get("/checkitem/delById.do?id="+id).then((res)=>{
-                            if(res.data.flag){
-                                this.$message({
-                                    type: 'success',
-                                    message: res.data.message
-                                });
-                            }else{
-                                this.$message({
-                                    type: 'error',
-                                    message: res.data.message
-                                });
-                            }
+                            this.$message({
+                                type: res.data.flag?'success':'error',
+                                message: res.data.message
+                            });
                             //4. 查询
                             this.findPage();
                         }).catch((err)=>{

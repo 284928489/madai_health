@@ -40,6 +40,8 @@ public class CheckItemController {
 
     @RequestMapping("findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
+        if(queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0)
+            queryPageBean.setCurrentPage(1);
         return checkItemService.queryPage(queryPageBean);
     }
 
@@ -56,7 +58,7 @@ public class CheckItemController {
             return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(true, MessageConstant.ADD_CHECKITEM_FAIL);
+            return new Result(false, MessageConstant.ADD_CHECKITEM_FAIL);
         }
     }
 
@@ -65,9 +67,12 @@ public class CheckItemController {
         try {
             checkItemService.delById(id);
             return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
+        } catch (RuntimeException e){
+            e.printStackTrace();
+            return new Result(false, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(true, MessageConstant.DELETE_CHECKITEM_FAIL);
+            return new Result(false, MessageConstant.DELETE_CHECKITEM_FAIL);
         }
     }
 

@@ -34,8 +34,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     @Override
     public void delCheckgroupById(Integer id) {
-        // 有外键先删除外键约束
-        checkGroupDao.deleteAssociation(id);
+        long count =
+                checkGroupDao.getCheckgroupidCountFrom_T_setmeal_checkgroup(id);
+        if(count > 0)
+            throw new RuntimeException("该检查组被多个检查套餐使用，不能删除");
+        count = checkGroupDao.getCheckgroupidCountFrom_T_checkgroup_checkitem(id);
+        if(count > 0)
+            // 有外键先删除外键约束
+            checkGroupDao.deleteAssociationFrom_T_checkgroup_checkitemByCheckgroupid(id);
         // 根据id删除检查组
         checkGroupDao.deleteCheckgroupById(id);
     }
@@ -43,7 +49,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     @Override
     public void edit(CheckGroup checkGroup, Integer[] checkitemIds) {
         //根据检查组id删除中间表数据（清理原有关联关系）
-        checkGroupDao.deleteAssociation(checkGroup.getId());
+        checkGroupDao.deleteAssociationFrom_T_checkgroup_checkitemByCheckgroupid(checkGroup.getId());
         //向中间表(t_checkgroup_checkitem)插入数据（建立检查组和检查项关联关系）
         setCheckGroupAndCheckItem(checkGroup.getId(),checkitemIds);
         //更新检查组基本信息
@@ -56,6 +62,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     }
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
         return checkGroupDao.findCheckItemIdsByCheckGroupId(id);
     }

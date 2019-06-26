@@ -25,4 +25,6 @@ public interface CheckItemDao {
     void delById(Integer id);
 
     List<CheckItem> findAll();
+
+    long getCheckItemIdCountFrom_t_checkgroup_checkitemByCheckitemId(Integer id);
 }

@@ -32,9 +32,12 @@ public class CheckGroupController {
         try {
             checkGroupService.delCheckgroupById(id);
             return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+        } catch (RuntimeException e){
+            e.printStackTrace();
+            return new Result(false, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(true, MessageConstant.EDIT_CHECKGROUP_FAIL);
+            return new Result(false, MessageConstant.EDIT_CHECKGROUP_FAIL);
         }
     }
 
@@ -85,6 +88,8 @@ public class CheckGroupController {
 
     @RequestMapping("findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
+        if(queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0)
+            queryPageBean.setCurrentPage(1);
         return checkGroupService.queryPage(queryPageBean);
     }
 }

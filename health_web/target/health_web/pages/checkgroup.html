@@ -284,7 +284,7 @@
                 activeName:'first',//添加/编辑窗口Tab标签名称
                 pagination: {//分页相关属性
                     currentPage: 1,
-                    pageSize:10,
+                    pageSize:7,
                     total:0,
                     queryString:null,
                 },
@@ -313,14 +313,10 @@
                       //发送ajax请求，提交模型数据
                       axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).
                       then((response)=> {
-                        if(response.data.flag){
                           this.$message({
                             message: response.data.message,
-                            type: 'success'
+                            type: response.data.flag ? 'success' : 'error'
                           });
-                        }else{
-                          this.$message.error(response.data.message);
-                        }
                       }).catch((err)=>{
                         this.$message.error("unkown error! =>"+err);
                         console.log(err);
@@ -342,16 +338,11 @@
                         axios.post(
                           		"/checkgroup/add.do?checkitemIds=" + this.checkitemIds,this.formData )
                         .then((response)=> {
-                        if(response.data.flag){
                           //新增成功，弹出成功提示
                           this.$message({
                             message: response.data.message,
-                            type: 'success'
+                            type: response.data.flag ? 'success' : 'error'
                           });
-                        }else{
-                          //新增失败，弹出错误提示
-                          this.$message.error(response.data.message);
-                        }
                       }).catch((err)=>{
                         this.$message.error("unkown error! =>"+err);
                         console.log(err);
@@ -451,17 +442,10 @@
                     type: 'warning'
                   }).then(()=>{
                     axios.get("/checkgroup/delCheckgroupById.do?id="+id).then((res)=>{
-                        if(res.data.flag){
                             this.$message({
-                                type: 'success',
+                                type: res.data.flag ? 'success' : 'error',
                                 message: res.data.message
                             });
-                        }else{
-                            this.$message({
-                                type: 'error',
-                                message: res.data.message
-                            });
-                        }
                     }).catch((err)=>{
                         this.$message.error("unkown error =>" + err);
                         console.log(err);
