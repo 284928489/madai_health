@@ -57,6 +57,11 @@ public class CheckGroupController {
 
     @RequestMapping("/findById")
     public Result findById(Integer id){
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         CheckGroup checkGroup = checkGroupService.findById(id);
         if(checkGroup != null){
             Result result = new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS);
