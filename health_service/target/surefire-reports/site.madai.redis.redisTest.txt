@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: site.madai.redis.redisTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.532 s - in site.madai.redis.redisTest

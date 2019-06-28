@@ -425,7 +425,8 @@
                     }
                   }).catch((err)=>{
                     this.$message.error("unkown error =>"+err);
-                  })
+                    console.log(err);
+                  });
                 },
                 //切换页码
                 handleCurrentChange(currentPage) {

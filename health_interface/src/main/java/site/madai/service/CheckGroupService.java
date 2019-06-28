@@ -3,6 +3,7 @@ package site.madai.service;
 import site.madai.entity.PageResult;
 import site.madai.entity.QueryPageBean;
 import site.madai.pojo.CheckGroup;
+import site.madai.pojo.Setmeal;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface CheckGroupService {
     void edit(CheckGroup checkGroup, Integer[] checkitemIds);
 
     void delCheckgroupById(Integer id);
+
+    List<Setmeal> findAll();
 }

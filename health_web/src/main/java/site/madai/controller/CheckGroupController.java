@@ -9,6 +9,7 @@ import site.madai.entity.PageResult;
 import site.madai.entity.QueryPageBean;
 import site.madai.entity.Result;
 import site.madai.pojo.CheckGroup;
+import site.madai.pojo.Setmeal;
 import site.madai.service.CheckGroupService;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public class CheckGroupController {
     @Reference
     private CheckGroupService checkGroupService;
 
+    @RequestMapping("findAll")
+    public Result findAll(){
+        List<Setmeal> checkGrouplist = checkGroupService.findAll();
+        if(checkGrouplist != null && checkGrouplist.size() > 0)
+            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS,checkGrouplist);
+        return new Result(false,MessageConstant.QUERY_CHECKITEM_FAIL);
+    }
+
     @RequestMapping("delCheckgroupById")
     public Result delCheckgroupById(Integer id){
         try {
@@ -42,7 +51,7 @@ public class CheckGroupController {
     }
 
     //编辑
-    @RequestMapping("/edit")
+    @RequestMapping("edit")
     public Result edit(@RequestBody CheckGroup checkGroup,Integer[] checkitemIds){
         try {
             checkGroupService.edit(checkGroup,checkitemIds);
@@ -53,18 +62,13 @@ public class CheckGroupController {
     }
 
     //根据检查组合id查询对应的所有检查项id
-    @RequestMapping("/findCheckItemIdsByCheckGroupId")
+    @RequestMapping("findCheckItemIdsByCheckGroupId")
     public List<Integer> findCheckItemIdsByCheckGroupId(Integer id){
         return checkGroupService.findCheckItemIdsByCheckGroupId(id);
     }
 
-    @RequestMapping("/findById")
+    @RequestMapping("findById")
     public Result findById(Integer id){
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         CheckGroup checkGroup = checkGroupService.findById(id);
         if(checkGroup != null){
             Result result = new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS);
@@ -74,7 +78,7 @@ public class CheckGroupController {
         return new Result(false,MessageConstant.QUERY_CHECKGROUP_FAIL);
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("add")
     public Result add(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds){
         try {
             checkGroupService.add(checkGroup,checkitemIds);

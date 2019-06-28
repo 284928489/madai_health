@@ -45,6 +45,7 @@ public class CheckItemServiceImpl implements CheckItemService {
     }
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public CheckItem findById(Integer id) {
         return checkItemDao.findById(id);
     }
@@ -64,6 +65,7 @@ public class CheckItemServiceImpl implements CheckItemService {
     }
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public List<CheckItem> findAll() {
         return checkItemDao.findAll();
     }

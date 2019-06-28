@@ -77,7 +77,7 @@ public class CheckItemController {
     }
 
     //查询所有
-    @RequestMapping("/findAll")
+    @RequestMapping("findAll")
     public Result findAll(){
         List<CheckItem> checkItemList = checkItemService.findAll();
         if(checkItemList != null && checkItemList.size() > 0){

@@ -3,6 +3,7 @@ package site.madai.dao;
 import com.github.pagehelper.Page;
 import site.madai.pojo.CheckGroup;
 import site.madai.pojo.CheckItem;
+import site.madai.pojo.Setmeal;
 
 import java.util.List;
 import java.util.Map;
@@ -35,4 +36,6 @@ public interface CheckGroupDao {
     long getCheckgroupidCountFrom_T_setmeal_checkgroup(Integer id);
 
     long getCheckgroupidCountFrom_T_checkgroup_checkitem(Integer id);
+
+    List<Setmeal> findAll();
 }

@@ -293,8 +293,6 @@
                             //3. 如果校验成功， 发送ajax请求，执行添加操作
                             axios.post("/checkitem/add.do", this.formData).then((res)=>{
                                 console.log(res);
-                                //4. 刷新页面， 重新查询数据
-                                this.findPage();
                                 //5. 提示 操作成功/失败的信息
                                     this.$message({
                                         message: res.data.message,

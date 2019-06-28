@@ -11,6 +11,7 @@ import site.madai.entity.PageResult;
 import site.madai.entity.QueryPageBean;
 import site.madai.pojo.CheckGroup;
 import site.madai.pojo.CheckItem;
+import site.madai.pojo.Setmeal;
 import site.madai.service.CheckGroupService;
 
 import java.util.HashMap;
@@ -47,6 +48,12 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     }
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    public List<Setmeal> findAll() {
+        return checkGroupDao.findAll();
+    }
+
+    @Override
     public void edit(CheckGroup checkGroup, Integer[] checkitemIds) {
         //根据检查组id删除中间表数据（清理原有关联关系）
         checkGroupDao.deleteAssociationFrom_T_checkgroup_checkitemByCheckgroupid(checkGroup.getId());
@@ -57,6 +64,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     }
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public CheckGroup findById(Integer id) {
         return checkGroupDao.findById(id);
     }
