@@ -26,10 +26,9 @@
     <dependencies>
         <dependency>
             <groupId>site.madai</groupId>
-            <artifactId>health_common</artifactId>
+            <artifactId>health_interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
     <build>
         <finalName>health_job</finalName>

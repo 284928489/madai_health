@@ -35,4 +35,6 @@ public interface SetmealDao {
     long getSetmealidCountFrom_t_setmeal_checkgroup(Integer id);
 
     void deleteSetmealById(Integer id);
+
+    List<String> findAllImg();
 }

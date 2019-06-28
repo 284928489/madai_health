@@ -1,6 +1,5 @@
 package site.madai.service;
 
-import org.springframework.web.multipart.MultipartFile;
 import site.madai.entity.PageResult;
 import site.madai.entity.QueryPageBean;
 import site.madai.pojo.Setmeal;
@@ -26,4 +25,6 @@ public interface SetmealService {
     void edit(Setmeal setmeal, Integer[] checkgroupIds);
 
     void delSetmealById(Integer id);
+
+    List<String> findAllImg();
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.JedisPool;
 import site.madai.constant.RedisConstant;
 import site.madai.dao.SetmealDao;
@@ -16,11 +15,8 @@ import site.madai.entity.QueryPageBean;
 import site.madai.pojo.CheckItem;
 import site.madai.pojo.Setmeal;
 import site.madai.service.SetmealService;
-import site.madai.utils.QiniuUtils;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @Project: site.madai.service.Impl
@@ -40,6 +36,11 @@ public class SetmealServiceImpl implements SetmealService {
     @Qualifier("jedisPool")
     private JedisPool jedisPool;
 
+    @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    public List<String> findAllImg() {
+        return setmealDao.findAllImg();
+    }
 
     @Override
     public void delSetmealById(Integer id) {
