@@ -29,9 +29,7 @@
         VALUES (#{setmealId},#{checkGroupId})
     </insert>
 
-    <select id="findById" parameterType="integer" resultType="setmeal">
-        select * from t_setmeal where id = #{id}
-    </select>
+
     <select id="findCheckGroupIdsBySetmealId" parameterType="integer"
             resultType="integer">
         select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{setmeal_id}
@@ -97,4 +95,29 @@
         select * from t_setmeal
     </select>
 
+    <select id="findById" parameterType="integer" resultType="setmeal">
+        select * from t_setmeal where id = #{id}
+    </select>
+    <resultMap type="Setmeal" id="baseResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+    </resultMap>
+    <resultMap type="Setmeal" id="findByIdResultMap" extends="baseResultMap">
+        <collection property="checkGroups" javaType="ArrayList"
+                    ofType="CheckGroup" column="id"
+                    select="site.madai.dao.CheckGroupDao.findCheckGroupBysetmealId">
+        </collection>
+    </resultMap>
+    <select id="findSetmealByIdformobile" parameterType="integer"
+            resultMap="findByIdResultMap">
+        select * from t_setmeal where id = #{id}
+    </select>
 </mapper>

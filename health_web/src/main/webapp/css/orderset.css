@@ -129,7 +129,7 @@
 }
 .everyday .usual {
     height: 100%;
-    background: #1ed7fc;
+    background-image: linear-gradient(60deg,#1D976C,#93F9B9);
     text-align: center;
     color: #fff;
     display: flex;
@@ -140,7 +140,7 @@
 }
 .everyday .fulled {
     height: 100%;
-    background: #ff9c9d;
+    background-image: linear-gradient(60deg,#bc4e9c,#f80759);
     text-align: center;
     color: #fff;
     display: flex;

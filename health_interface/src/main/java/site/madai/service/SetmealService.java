@@ -29,4 +29,6 @@ public interface SetmealService {
     List<String> findAllImg();
 
     List<Setmeal> getAllSetmeal();
+
+    Setmeal findSetmealByIdformobile(Integer id);
 }

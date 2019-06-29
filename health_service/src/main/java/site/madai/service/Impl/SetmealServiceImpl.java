@@ -43,6 +43,11 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     @Override
+    public Setmeal findSetmealByIdformobile(Integer id) {
+        return setmealDao.findSetmealByIdformobile(id);
+    }
+
+    @Override
     public List<Setmeal> getAllSetmeal() {
         return setmealDao.getAllSetmeal();
     }

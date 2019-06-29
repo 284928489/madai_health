@@ -85,4 +85,26 @@
     <select id="findAll" resultType="checkgroup">
         select * from t_checkgroup
     </select>
+
+    <resultMap type="CheckGroup" id="baseResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+    </resultMap>
+    <resultMap type="CheckGroup" id="findByIdResultMap" extends="baseResultMap">
+        <collection property="checkItems" javaType="ArrayList"
+                    ofType="CheckItem" column="id"
+                    select="site.madai.dao.CheckItemDao.findCheckItemBycheckgroupId">
+        </collection>
+    </resultMap>
+    <!--根据套餐id查询检查项信息-->
+    <select id="findCheckGroupBysetmealId" resultMap="findByIdResultMap"
+            parameterType="integer">
+  select * from t_checkgroup  where id
+  in (select checkgroup_id from t_setmeal_checkgroup where setmeal_id=#{id})
+</select>
 </mapper>

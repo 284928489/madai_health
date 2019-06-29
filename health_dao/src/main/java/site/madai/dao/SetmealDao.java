@@ -39,4 +39,6 @@ public interface SetmealDao {
     List<String> findAllImg();
 
     List<Setmeal> getAllSetmeal();
+
+    Setmeal findSetmealByIdformobile(Integer id);
 }
