@@ -27,4 +27,6 @@ public interface SetmealService {
     void delSetmealById(Integer id);
 
     List<String> findAllImg();
+
+    List<Setmeal> getAllSetmeal();
 }

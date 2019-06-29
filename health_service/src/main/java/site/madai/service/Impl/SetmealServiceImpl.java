@@ -43,6 +43,11 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     @Override
+    public List<Setmeal> getAllSetmeal() {
+        return setmealDao.getAllSetmeal();
+    }
+
+    @Override
     public void delSetmealById(Integer id) {
         long count =
                 setmealDao.getSetmealidCountFrom_t_order(id);
