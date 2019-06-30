@@ -30,4 +30,6 @@ public interface OrderSettingDao {
 
     List<OrderSetting> findByMonth(@Param("startDate") String startDate,
                                    @Param("endDate") String endDate);
+
+    void editReservationsByOrderDate(OrderSetting orderSetting);
 }

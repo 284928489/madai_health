@@ -28,4 +28,10 @@
         from t_ordersetting
         where orderDate between #{startDate} and #{endDate}
     </select>
+
+    <!-- 更新已预约人数 -->
+    <update id="editReservationsByOrderDate"
+            parameterType="ordersetting">
+          update t_ordersetting set reservations = #{reservations} where orderDate = #{orderDate}
+    </update>
 </mapper>

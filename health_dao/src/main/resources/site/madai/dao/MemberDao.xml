@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.madai.dao.MemberDao">
+    <select id="findByTelephone" parameterType="String"
+            resultType="Member">
+        select * from t_member where phoneNumber = #{phoneNumber}
+    </select>
+    <insert id="add" parameterType="member">
+        <selectKey resultType="integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        t_member
+        (fileNumber,name,sex,idCard,phoneNumber,
+        regTime,password,email,birthday,remark)
+        values
+        (#{fileNumber},#{name},#{sex},#{idCard},#{phoneNumber},
+        #{regTime},#{password},#{email},#{birthday},#{remark})
+    </insert>
+</mapper>

@@ -25,7 +25,7 @@ public class SMSUtils {
     public static final String ORDER_NOTICE = "SMS_169112725";//体检预约成功通知
 
     public static void main(String[] args)throws Exception {
-        SMSUtils.sendShortMessage("SMS_169112710","18242263416","1234");
+        SMSUtils.sendShortMessage("SMS_169112710","18511085915","1234");
 //        SMSUtils.sendShortMessage("SMS_169112725","18242263416","12345");
     }
 
@@ -70,7 +70,9 @@ public class SMSUtils {
         SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
         if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
             // 请求成功
-            System.out.println("请求成功");
+            System.out.println(sendSmsResponse.getMessage());
+        }else{
+            System.out.println(sendSmsResponse.getMessage());
         }
     }
 }
