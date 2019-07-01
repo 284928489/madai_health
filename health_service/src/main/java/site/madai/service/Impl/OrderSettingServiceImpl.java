@@ -2,6 +2,7 @@ package site.madai.service.Impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import site.madai.dao.OrderSettingDao;
 import site.madai.pojo.OrderSetting;
@@ -30,6 +31,7 @@ public class OrderSettingServiceImpl implements OrderSettingService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public List<OrderSetting> findByMonth(String month) {
         //拼接当月第一天日期
         //month = 2019-6-1

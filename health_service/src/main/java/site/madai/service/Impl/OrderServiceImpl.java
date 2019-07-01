@@ -2,6 +2,7 @@ package site.madai.service.Impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import site.madai.constant.MessageConstant;
 import site.madai.dao.MemberDao;
@@ -36,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public Result findById4Detail(Integer id) throws Exception {
         Map map = orderDao.findById4Detail(id);
         if(map != null){
