@@ -17,6 +17,7 @@ import site.madai.pojo.Setmeal;
 import site.madai.service.SetmealService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Project: site.madai.service.Impl
@@ -38,16 +39,24 @@ public class SetmealServiceImpl implements SetmealService {
 
     @Override
     @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    public List<Map<String, Object>> findSetmealCount() {
+        return setmealDao.findSetmealCount();
+    }
+
+    @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public List<String> findAllImg() {
         return setmealDao.findAllImg();
     }
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public Setmeal findSetmealByIdformobile(Integer id) {
         return setmealDao.findSetmealByIdformobile(id);
     }
 
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public List<Setmeal> getAllSetmeal() {
         return setmealDao.getAllSetmeal();
     }

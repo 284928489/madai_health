@@ -28,7 +28,7 @@ public class CheckItemController {
     private CheckItemService checkItemService;
 
     @RequestMapping("add")
-    public Result add(@RequestBody CheckItem checkItem){
+    public Result add(@RequestBody CheckItem checkItem) {
         try {
             checkItemService.add(checkItem);
             return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
@@ -39,20 +39,20 @@ public class CheckItemController {
     }
 
     @RequestMapping("findPage")
-    public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
-        if(queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0)
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
+        if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0)
             queryPageBean.setCurrentPage(1);
         return checkItemService.queryPage(queryPageBean);
     }
 
     @RequestMapping("findById")
-    public Result findById(Integer id){
-        CheckItem checkItem =  checkItemService.findById(id);
-        return  new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItem);
+    public Result findById(Integer id) {
+        CheckItem checkItem = checkItemService.findById(id);
+        return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItem);
     }
 
     @RequestMapping("update")
-    public Result update(@RequestBody CheckItem checkItem){
+    public Result update(@RequestBody CheckItem checkItem) {
         try {
             checkItemService.update(checkItem);
             return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
@@ -63,11 +63,11 @@ public class CheckItemController {
     }
 
     @RequestMapping("delById")
-    public Result delById(Integer id){
+    public Result delById(Integer id) {
         try {
             checkItemService.delById(id);
             return new Result(true, MessageConstant.DELETE_CHECKITEM_SUCCESS);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             e.printStackTrace();
             return new Result(false, e.getMessage());
         } catch (Exception e) {
@@ -78,13 +78,13 @@ public class CheckItemController {
 
     //查询所有
     @RequestMapping("findAll")
-    public Result findAll(){
+    public Result findAll() {
         List<CheckItem> checkItemList = checkItemService.findAll();
-        if(checkItemList != null && checkItemList.size() > 0){
+        if (checkItemList != null && checkItemList.size() > 0) {
             Result result = new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS);
             result.setData(checkItemList);
             return result;
         }
-        return new Result(false,MessageConstant.QUERY_CHECKITEM_FAIL);
+        return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
     }
 }

@@ -12,6 +12,10 @@
         <link rel="stylesheet" href="../plugins/elementui/index.css">
         <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/style.css">
+        <script src="../js/vue.js"></script>
+        <script src="../plugins/elementui/index.js"></script>
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script src="../js/axios-0.18.0.js"></script>
         <style>
             .grid-content {
                 border-radius: 4px;
@@ -30,7 +34,7 @@
                 </el-breadcrumb>
             </div>
             <div class="app-container">
-                <div class="box" style="height: 900px">
+                <div class="box" style="height: 800px">
                     <div class="excelTitle" >
                         <el-button @click="exportExcel">导出Excel</el-button>运营数据统计
                     </div>
@@ -89,13 +93,10 @@
                         </tr>
                     </table>
                 </div>
+            </div>
         </div>
     </body>
     <!-- 引入组件库 -->
-    <script src="../js/vue.js"></script>
-    <script src="../plugins/elementui/index.js"></script>
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <script src="../js/axios-0.18.0.js"></script>
     <script>
         var vue = new Vue({
             el: '#app',
@@ -121,6 +122,8 @@
             created() {
                 axios.get("/report/getBusinessReportData.do").then((res)=>{
                     this.reportData = res.data.data;
+                }).catch((err) => {
+                    this.$message.error(err.toString());
                 });
             },
             methods:{

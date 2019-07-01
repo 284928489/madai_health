@@ -2,6 +2,9 @@ package site.madai.service;
 
 import site.madai.pojo.Member;
 
+import java.text.ParseException;
+import java.util.List;
+
 /**
  * @Project: site.madai.service
  * @Author: ShaoDi Wang
@@ -13,4 +16,6 @@ public interface MemberService {
     Member findByTelephone(String telephone);
 
     void add(Member member);
+
+    List<Integer> findMemberCountByMonth(List<String> list);
 }

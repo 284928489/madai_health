@@ -30,23 +30,23 @@ public class OrderSettingController {
     private OrderSettingService orderSettingService;
 
     @RequestMapping("saveOrEdit")
-    public Result saveOrEdit(@RequestBody OrderSetting orderSetting){
+    public Result saveOrEdit(@RequestBody OrderSetting orderSetting) {
         try {
-            List<OrderSetting > orderSettingList = new ArrayList<>();
+            List<OrderSetting> orderSettingList = new ArrayList<>();
             orderSettingList.add(orderSetting);
             orderSettingService.addOrderSettingList(orderSettingList);
-            return  new Result(true,MessageConstant.ORDERSETTING_SUCCESS);
+            return new Result(true, MessageConstant.ORDERSETTING_SUCCESS);
         } catch (RuntimeException e) {
             e.printStackTrace();
-            return  new Result(false, e.getMessage());
-        }catch (Exception e) {
+            return new Result(false, e.getMessage());
+        } catch (Exception e) {
             e.printStackTrace();
-            return  new Result(false,MessageConstant.ORDERSETTING_FAIL);
+            return new Result(false, MessageConstant.ORDERSETTING_FAIL);
         }
     }
 
     @RequestMapping("findByMonth")
-    public Result findByMonth(String month){
+    public Result findByMonth(String month) {
         try {
             List<OrderSetting> orderSettingList = orderSettingService.findByMonth(month);
             /**
@@ -66,25 +66,25 @@ public class OrderSettingController {
              ]
              */
             //将查询到数据结构转换为需要的数据结构
-            List<Map<String,Object>> leftobj = new ArrayList<>();
+            List<Map<String, Object>> leftobj = new ArrayList<>();
             //一个orderSetting对象对应一个Map集合
             for (OrderSetting orderSetting : orderSettingList) {
-                Map<String ,Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<>();
                 map.put("date", orderSetting.getOrderDate().getDate());
                 map.put("number", orderSetting.getNumber());
                 map.put("reservations", orderSetting.getReservations());
                 //把 map集合存储到list集合中
                 leftobj.add(map);
             }
-            return new Result(true,MessageConstant.GET_ORDERSETTING_SUCCESS, leftobj);
+            return new Result(true, MessageConstant.GET_ORDERSETTING_SUCCESS, leftobj);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.GET_ORDERSETTING_FAIL);
+            return new Result(false, MessageConstant.GET_ORDERSETTING_FAIL);
         }
     }
 
     @RequestMapping("upload")
-    public Result upload(@RequestBody MultipartFile excelFile){
+    public Result upload(@RequestBody MultipartFile excelFile) {
         try {
             List<String[]> stringsList = POIUtils.readExcel(excelFile);
             //把stringsList集合中的数据 转换到OrderSettingList对象中
@@ -109,7 +109,7 @@ public class OrderSettingController {
         } catch (RuntimeException e) {
             e.printStackTrace();
             return new Result(false, e.getMessage());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.IMPORT_ORDERSETTING_FAIL);
         }

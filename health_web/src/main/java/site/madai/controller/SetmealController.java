@@ -42,22 +42,22 @@ public class SetmealController {
 
     //编辑
     @RequestMapping("edit")
-    public Result edit(@RequestBody Setmeal setmeal,Integer[] checkgroupIds){
+    public Result edit(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
         try {
-            setmealService.edit(setmeal,checkgroupIds);
-        }catch (Exception e){
-            return new Result(false,MessageConstant.EDIT_SETMEAL_FAIL);
+            setmealService.edit(setmeal, checkgroupIds);
+        } catch (Exception e) {
+            return new Result(false, MessageConstant.EDIT_SETMEAL_FAIL);
         }
-        return new Result(true,MessageConstant.EDIT_SETMEAL_SUCCESS);
+        return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
     }
 
     @RequestMapping("add")
     public Result add(@RequestBody Setmeal setmeal,
-                      @RequestParam("checkgroupIds") Integer[] checkgroupIds){
+                      @RequestParam("checkgroupIds") Integer[] checkgroupIds) {
         try {
             setmealService.add(setmeal, checkgroupIds);
             return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
-        }catch (Exception e) {
+        } catch (Exception e) {
             //新增失败
             e.printStackTrace();
             return new Result(false, MessageConstant.ADD_SETMEAL_FAIL);
@@ -65,13 +65,13 @@ public class SetmealController {
     }
 
     @RequestMapping("upload")
-    public Result upload(@RequestBody MultipartFile imgFile){
+    public Result upload(@RequestBody MultipartFile imgFile) {
         String originalFilename = imgFile.getOriginalFilename();
-        if(originalFilename == null || originalFilename.length() == 0)
+        if (originalFilename == null || originalFilename.length() == 0)
             return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
         //生成唯一的文件名称
         //uuid 的名称
-        String uuid = UUID.randomUUID().toString().replace("-","");
+        String uuid = UUID.randomUUID().toString().replace("-", "");
         //获取原始文件名   03a36073-a140-4942-9b9b-712cecb144901.jpg
         //获取文件的后缀名
         String extendName = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -79,45 +79,45 @@ public class SetmealController {
         String uniqueName = uuid + extendName;
         //进行上传
         try {
-            QiniuUtils.upload2Qiniu(imgFile.getBytes() ,uniqueName);
+            QiniuUtils.upload2Qiniu(imgFile.getBytes(), uniqueName);
             //已经上传成功， 需要把图片名称存储在redis中
             jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES, uniqueName);
             return new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, uniqueName);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.PIC_UPLOAD_FAIL);
+            return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
         }
     }
 
     @RequestMapping("findById")
-    public Result findById(Integer id){
+    public Result findById(Integer id) {
         Setmeal setmeal = setmealService.findById(id);
-        if(setmeal != null){
+        if (setmeal != null) {
             return new Result(true,
-                    MessageConstant.QUERY_SETMEAL_SUCCESS,setmeal);
+                    MessageConstant.QUERY_SETMEAL_SUCCESS, setmeal);
         }
-        return new Result(false,MessageConstant.QUERY_SETMEAL_FAIL);
+        return new Result(false, MessageConstant.QUERY_SETMEAL_FAIL);
     }
 
     @RequestMapping("findCheckGroupIdsBySetmealId")
-    public List<Integer> findCheckGroupIdsBySetmealId(Integer id){
+    public List<Integer> findCheckGroupIdsBySetmealId(Integer id) {
         return setmealService.findCheckGroupIdsBySetmealId(id);
     }
 
 
     @RequestMapping("findByPage")
-    public PageResult findByPage(@RequestBody QueryPageBean queryPageBean){
-        if(queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0)
+    public PageResult findByPage(@RequestBody QueryPageBean queryPageBean) {
+        if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0)
             queryPageBean.setCurrentPage(1);
         return setmealService.findByPage(queryPageBean);
     }
 
     @RequestMapping("delSetmealById")
-    public Result delSetmealById(Integer id){
+    public Result delSetmealById(Integer id) {
         try {
             setmealService.delSetmealById(id);
             return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
 //            e.printStackTrace();
             return new Result(false, e.getMessage());
         } catch (Exception e) {

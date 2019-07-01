@@ -8,6 +8,12 @@ import site.madai.dao.MemberDao;
 import site.madai.pojo.Member;
 import site.madai.service.MemberService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  * @Project: site.madai.service.Impl
  * @Author: ShaoDi Wang
@@ -23,9 +29,21 @@ public class MemberServiceImpl implements MemberService {
     private MemberDao memberDao;
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Member findByTelephone(String telephone) {
         return memberDao.findByTelephone(telephone);
+    }
+
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
+    public List<Integer> findMemberCountByMonth(List<String> month){
+        List<Integer> list = new ArrayList<>();
+        for(String m : month){
+            m = m + ".31";//格式：2019.04.31
+            Integer count = memberDao.findMemberCountBeforeDate(m);
+            list.add(count);
+        }
+        return list;
     }
 
     @Override

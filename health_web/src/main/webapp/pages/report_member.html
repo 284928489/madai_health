@@ -12,26 +12,43 @@
         <link rel="stylesheet" href="../plugins/elementui/index.css">
         <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="../css/style.css">
-        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <link rel="stylesheet" href="../css/fx.css">
+        <!-- 引入组件库 -->
         <script src="../js/vue.js"></script>
-        <script src="../js/axios-0.18.0.js"></script>
         <script src="../plugins/elementui/index.js"></script>
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script src="../js/axios-0.18.0.js"></script>
         <script src="../plugins/echarts/echarts.js"></script>
     </head>
     <body class="hold-transition">
         <div id="app">
             <div class="content-header">
                 <h1>统计分析<small>会员数量</small></h1>
-                <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>统计分析</el-breadcrumb-item>
-                    <el-breadcrumb-item>会员数量</el-breadcrumb-item>
-                </el-breadcrumb>
+            <div aria-label="Breadcrumb" role="navigation" class="el-breadcrumb breadcrumb">
+                <span class="el-breadcrumb__item">
+                    <span role="link" class="el-breadcrumb__inner is-link">
+                        首页
+                    </span>
+                    <i class="el-breadcrumb__separator el-icon-arrow-right"></i>
+                </span>
+                <span class="el-breadcrumb__item">
+                    <span role="link" class="el-breadcrumb__inner">
+                        统计分析
+                    </span>
+                    <i class="el-breadcrumb__separator el-icon-arrow-right"></i>
+                </span>
+                <span class="el-breadcrumb__item" aria-current="page">
+                    <span role="link" class="el-breadcrumb__inner">
+                        会员数量
+                    </span>
+                    <i class="el-breadcrumb__separator el-icon-arrow-right"></i>
+                </span>
+            </div>
             </div>
             <div class="app-container">
                 <div class="box">
-                    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-                    <div id="chart1" style="height:600px;"></div>
+                     <!--为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                    <div id="chart1" style="height:510px;"></div>
                 </div>
             </div>
         </div>
@@ -42,7 +59,22 @@
         var myChart1 = echarts.init(document.getElementById('chart1'));
 
         // 使用刚指定的配置项和数据显示图表。
-        //myChart.setOption(option);
+        // option = {
+        //     xAxis: {
+        //         type: 'category',
+        //         boundaryGap: false,
+        //         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        //     },
+        //     yAxis: {
+        //         type: 'value'
+        //     },
+        //     series: [{
+        //         data: [820, 932, 901, 934, 1290, 1330, 1320],
+        //         type: 'line',
+        //         areaStyle: {}
+        //     }]
+        // };
+        // myChart1.setOption(option);
 
         axios.get("/report/getMemberReport.do").then((res)=>{
             myChart1.setOption(
@@ -66,6 +98,8 @@
                                         data: res.data.data.memberCount
                                     }]
                                 });
+        }).catch((err) => {
+            this.$message.error(err.toString());
         });
     </script>
 </html>

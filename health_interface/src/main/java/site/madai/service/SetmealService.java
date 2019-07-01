@@ -5,6 +5,7 @@ import site.madai.entity.QueryPageBean;
 import site.madai.pojo.Setmeal;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Project: site.madai.service
@@ -31,4 +32,6 @@ public interface SetmealService {
     List<Setmeal> getAllSetmeal();
 
     Setmeal findSetmealByIdformobile(Integer id);
+
+    List<Map<String, Object>> findSetmealCount();
 }
