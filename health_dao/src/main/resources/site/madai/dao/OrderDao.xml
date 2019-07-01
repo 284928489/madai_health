@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.madai.dao.OrderDao">
-    <select id="findByCondition" parameterType="map"
+    <select id="findByCondition" parameterType="order"
             resultType="order">
         select * from t_order
         <where>
@@ -28,7 +28,7 @@
         </where>
     </select>
 
-    <insert id="add" parameterType="map">
+    <insert id="add" parameterType="order">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID()
         </selectKey>

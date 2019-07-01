@@ -29,7 +29,7 @@ public class OrderSettingController {
     @Reference
     private OrderSettingService orderSettingService;
 
-    @RequestMapping("/saveOrEdit")
+    @RequestMapping("saveOrEdit")
     public Result saveOrEdit(@RequestBody OrderSetting orderSetting){
         try {
             List<OrderSetting > orderSettingList = new ArrayList<>();
@@ -45,7 +45,7 @@ public class OrderSettingController {
         }
     }
 
-    @RequestMapping("/findByMonth")
+    @RequestMapping("findByMonth")
     public Result findByMonth(String month){
         try {
             List<OrderSetting> orderSettingList = orderSettingService.findByMonth(month);

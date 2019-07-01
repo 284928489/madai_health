@@ -13,9 +13,9 @@ import java.util.Map;
  * @Version: 1.0
  */
 public interface OrderDao {
-    List<Order> findByCondition(Map order);
+    List<Order> findByCondition(Order order);
 
-    void add(Map order);
+    void add(Order order);
 
     Map findById4Detail(Integer id);
 }

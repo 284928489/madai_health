@@ -54,12 +54,11 @@ public class OrderSettingServiceImpl implements OrderSettingService {
     public void addOrderSettingList(List<OrderSetting> orderSettingList) {
         //遍历集合
         if(orderSettingList != null && orderSettingList.size() > 0){
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             for (OrderSetting orderSetting : orderSettingList) {
                 //1.判断该日期是否进行过预约设置
                 //根据日期查询预约设置对象
                 OrderSetting orderSettingDB =
-                        orderSettingDao.findByOrderDate(format.format(orderSetting.getOrderDate()));
+                        orderSettingDao.findByOrderDate(orderSetting.getOrderDate());
                 if(orderSettingDB != null){
                     // 2. 如果该日期已经预约设置，根据该日期进行修改预约设置
                     //orderSettingDB.getReservations() 数据库中查询出来的已预约人数
@@ -69,11 +68,11 @@ public class OrderSettingServiceImpl implements OrderSettingService {
                         //如果大于可预约人数，提示客户不能修改设置[抛出异常]
                         throw  new RuntimeException("已预约人数超过了可预约人数，不可修改!!");
                     }else{
-                        orderSettingDao.update(format.format(orderSetting.getOrderDate()),orderSetting.getNumber());
+                        orderSettingDao.update(orderSetting);
                     }
                 }else{
                     // 3. 如果该日期没有预约设置 ，直接添加
-                    orderSettingDao.add(format.format(orderSetting.getOrderDate()),orderSetting.getNumber(),orderSetting.getReservations());
+                    orderSettingDao.add(orderSetting);
                 }
             }
         }

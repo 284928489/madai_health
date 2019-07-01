@@ -15,7 +15,6 @@ import site.madai.service.OrderService;
 import site.madai.utils.DateUtils;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
         //检查当前日期是否进行了预约设置
         String orderDate = (String) map.get("orderDate");
         Date date = DateUtils.parseString2Date(orderDate);
-        OrderSetting orderSetting = orderSettingDao.findByOrderDate(orderDate);
+        OrderSetting orderSetting = orderSettingDao.findByOrderDate(date);
         if(orderSetting == null){
             return new Result(false, MessageConstant.SELECTED_DATE_CANNOT_ORDER);
         }
@@ -73,13 +72,7 @@ public class OrderServiceImpl implements OrderService {
         if(member != null){
             Integer memberId = member.getId();
             int setmealId = Integer.parseInt((String) map.get("setmealId"));
-//            Order order = new Order(memberId,date,null,null,setmealId);
-            Map order = new HashMap();
-            order.put("memberId",memberId);
-            order.put("orderDate",orderDate);
-            order.put("orderType",null);
-            order.put("orderStatus",null);
-            order.put("setmealId",setmealId);
+            Order order = new Order(memberId,date,null,null,setmealId);
             List<Order> list = orderDao.findByCondition(order);
             if(list != null && list.size() > 0){
                 //已经完成了预约，不能重复预约
@@ -103,17 +96,11 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //保存预约信息到预约表
-//        Order order = new Order(member.getId(),
-//                date,
-//                (String)map.get("orderType"),
-//                Order.ORDERSTATUS_NO,
-//                Integer.parseInt((String) map.get("setmealId")));
-        HashMap order = new HashMap();
-        order.put("memberId",member.getId());
-        order.put("orderDate",orderDate);
-        order.put("orderType",map.get("orderType"));
-        order.put("orderStatus",Order.ORDERSTATUS_NO);
-        order.put("setmealId",map.get("setmealId"));
+        Order order = new Order(member.getId(),
+                date,
+                (String)map.get("orderType"),
+                Order.ORDERSTATUS_NO,
+                Integer.parseInt((String) map.get("setmealId")));
         orderDao.add(order);
 
         return new Result(true,MessageConstant.ORDER_SUCCESS,order);

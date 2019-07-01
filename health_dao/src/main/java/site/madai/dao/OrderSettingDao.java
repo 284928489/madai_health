@@ -19,14 +19,11 @@ public interface OrderSettingDao {
      * @param orderDate formate : yyyy-MM-dd
      * @return
      */
-    OrderSetting findByOrderDate(String orderDate);
+    OrderSetting findByOrderDate(Date orderDate);
 
-    void update(@Param("orderDate") String orderDate,
-                @Param("number") Integer number);
+    void update(OrderSetting orderSetting);
 
-    void add(@Param("orderDate") String orderDate,
-             @Param("number") Integer number,
-             @Param("reservations") Integer reservations);
+    void add(OrderSetting orderSetting);
 
     List<OrderSetting> findByMonth(@Param("startDate") String startDate,
                                    @Param("endDate") String endDate);

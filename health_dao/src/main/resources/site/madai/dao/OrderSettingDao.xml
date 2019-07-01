@@ -12,12 +12,12 @@
         where orderDate = #{date}
     </select>
 
-    <update id="update">
+    <update id="update" parameterType="ordersetting">
         update t_ordersetting set number = #{number} where orderDate =
         #{orderDate}
     </update>
 
-    <insert id="add">
+    <insert id="add" parameterType="ordersetting">
         insert into `t_ordersetting` (`orderDate`, `number`, `reservations`)
         VALUES ( #{orderDate}, #{number}, #{reservations})
     </insert>
