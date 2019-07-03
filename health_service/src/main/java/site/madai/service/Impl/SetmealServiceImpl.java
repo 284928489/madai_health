@@ -87,7 +87,7 @@ public class SetmealServiceImpl implements SetmealService {
         Page<CheckItem> page  =
                 setmealDao.findByCondition(queryPageBean.getQueryString());
         //3. 返回对象
-        return new PageResult(page.getTotal(), page);
+        return new PageResult(page.getTotal(), page,queryPageBean.getCurrentPage());
     }
 
     @Override

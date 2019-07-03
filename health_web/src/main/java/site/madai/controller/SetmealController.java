@@ -107,9 +107,14 @@ public class SetmealController {
 
     @RequestMapping("findByPage")
     public PageResult findByPage(@RequestBody QueryPageBean queryPageBean) {
-        if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0)
-            queryPageBean.setCurrentPage(1);
-        return setmealService.findByPage(queryPageBean);
+        PageResult pageResult = setmealService.findByPage(queryPageBean);
+        if(pageResult.getRows().size() == 0){
+            if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0){
+                queryPageBean.setCurrentPage(1);
+                pageResult = setmealService.findByPage(queryPageBean);
+            }
+        }
+        return pageResult;
     }
 
     @RequestMapping("delSetmealById")

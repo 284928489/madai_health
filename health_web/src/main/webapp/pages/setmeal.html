@@ -476,6 +476,7 @@
                         //数据显示
                         this.dataList = res.data.rows;
                         this.pagination.total = res.data.total;
+                        this.pagination.currentPage = res.data.currentPage;
                     }).catch((err) => {
                         this.$message.error(err);
                         console.log(err);

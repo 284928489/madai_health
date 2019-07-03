@@ -36,7 +36,7 @@ public class CheckItemServiceImpl implements CheckItemService {
         //2. 查询所有
         Page<CheckItem> page  = checkItemDao.findByCondition(queryPageBean.getQueryString());
         //3. 返回对象
-        return new PageResult(page.getTotal(), page);
+        return new PageResult(page.getTotal(), page,queryPageBean.getCurrentPage());
     }
 
     @Override
