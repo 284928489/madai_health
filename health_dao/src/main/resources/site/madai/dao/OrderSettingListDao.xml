@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.madai.dao.OrderSettingListDao">
+
+    <resultMap type="java.util.HashMap" id="baseResultMap">
+        <id column="id" property="id"/>
+        <result column="orderDate" property="orderDate"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="idCard" property="idCard"/>
+        <result column="phoneNumber" property="phoneNumber"/>
+        <result column="orderType" property="orderType"/>
+        <result column="orderStatus" property="orderStatus"/>
+    </resultMap>
+
+    <select id="findByCondition" parameterType="Map" resultMap="baseResultMap">
+        select
+        o.id,o.orderDate,m.name,m.sex,m.idCard,m.phoneNumber,o.orderType,o.orderStatus
+        from t_order o inner join t_member m on o.member_id=m.id
+        <where>
+            <if test="queryString != null and queryString.length > 0">
+                m.phoneNumber = #{queryString}
+            </if>
+            <if test="startDate != null and endDate != null">
+                and o.orderDate between #{startDate} and #{endDate}
+            </if>
+        </where>
+    </select>
+</mapper>

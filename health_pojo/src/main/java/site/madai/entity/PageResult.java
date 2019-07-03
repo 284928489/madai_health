@@ -7,11 +7,29 @@ import java.util.List;
 public class PageResult implements Serializable{
     private Long total;//总记录数
     private List rows;//当前页结果
+    private Integer currentPage;
+
     public PageResult(Long total, List rows) {
         super();
         this.total = total;
         this.rows = rows;
     }
+
+    public PageResult(Long total, List rows,Integer currentPage) {
+        super();
+        this.total = total;
+        this.rows = rows;
+        this.currentPage = currentPage;
+    }
+
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
+
     public Long getTotal() {
         return total;
     }

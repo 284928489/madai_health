@@ -30,4 +30,6 @@ public interface OrderDao {
     Integer findVisitsCountAfterDate(@Param("orderDate") String thisWeekMonday);
 
     List<Map> findHotSetmeal();
+
+    void delOrderById(Integer id);
 }

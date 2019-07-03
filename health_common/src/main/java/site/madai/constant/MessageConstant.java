@@ -6,6 +6,8 @@ package site.madai.constant;
 public class MessageConstant {
     public static final String DELETE_CHECKITEM_FAIL = "删除检查项失败";
     public static final String DELETE_CHECKITEM_SUCCESS = "删除检查项成功";
+    public static final String DELETE_ORDER_SUCCESS = "删除订单成功";
+    public static final String DELETE_ORDER_FAIL = "删除订单失败";
     public static final String ADD_CHECKITEM_SUCCESS = "新增检查项成功";
     public static final String ADD_CHECKITEM_FAIL = "新增检查项失败";
     public static final String EDIT_CHECKITEM_FAIL = "编辑检查项失败";
