@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Service(interfaceClass = OrderSettingListService.class)
 @Transactional
-public class orderSettingListServiceImpl implements OrderSettingListService {
+public class OrderSettingListServiceImpl implements OrderSettingListService {
 
     @Autowired
     private OrderSettingListDao orderSettingListDao;
