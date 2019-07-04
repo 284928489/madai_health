@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+  <link rel="stylesheet" href="../css/bootstrap.css">
+  <link rel="stylesheet" href="../plugins/elementui/index.css">
+  <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+  <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script> -->
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="../js/vue.js"></script>
+  <script src="../plugins/elementui/index.js"></script>
+  <script src="../js/axios-0.18.0.js"></script>
+</head>
+<body>
+<div id="app">
+
+  <div class="container-fluid">
+    <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+<div class="row">
+  <div class="col-xs-9 col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+        当前账户
+        </h3>
+      </div>
+      <div class="panel-body">
+        <el-row :gutter="12">
+  <el-col :span="8">
+    <el-card shadow="hover">
+      <div class="text item">
+      管理人数:6130
+      </div>
+      <div class="text item">
+        历史未执行人次:0
+      </div>
+    </el-card>
+  </el-col>
+  <el-col :span="8">
+    <el-card shadow="hover">
+      <div class="text item">
+        今日未执行人次:0
+      </div>
+      <div class="text item">
+        已执行人次:2
+      </div>
+    </el-card>
+  </el-col>
+</el-row>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-9 col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          汇总
+        </h3>
+      </div>
+      <div class="panel-body">
+        <el-row :gutter="12">
+  <el-col :span="8">
+    <el-card shadow="hover">
+      <div class="text item">
+      管理人数:6130
+      </div>
+      <div class="text item">
+        历史未执行人次:0
+      </div>
+    </el-card>
+  </el-col>
+  <el-col :span="8">
+    <el-card shadow="hover">
+      <div class="text item">
+        今日未执行人次:0
+      </div>
+      <div class="text item">
+        已执行人次:2
+      </div>
+    </el-card>
+  </el-col>
+</el-row>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+<div class="row">
+  <div class="col-xs-9 col-md-6">
+<div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          今日平台概况
+        </h3>
+      </div>
+      <div class="panel-body">
+        <el-row :gutter="12">
+  <el-col :span="8">
+    <el-card shadow="hover">
+      <div class="text item">
+      问卷评估
+      </div>
+    </el-card>
+  </el-col>
+  <el-col :span="8">
+    <el-card shadow="hover">
+      体检指数
+    </el-card>
+  </el-col>
+  <el-col :span="8">
+    <el-card shadow="hover">
+      干预方案
+    </el-card>
+  </el-col>
+</el-row>
+<el-row :gutter="12">
+<el-col :span="8">
+<el-card shadow="hover">
+干预追踪
+</el-card>
+</el-col>
+<el-col :span="8">
+<el-card shadow="hover">
+预约人数
+</el-card>
+</el-col>
+<el-col :span="8">
+<el-card shadow="hover">
+问卷评估
+</el-card>
+</el-col>
+</el-row>
+<el-row :gutter="12">
+<el-col :span="8">
+<el-card shadow="hover">
+问卷评估
+</el-card>
+</el-col>
+</el-row>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-9 col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          会员统计
+        </h3>
+      </div>
+      <div class="panel-body">
+        <el-row :gutter="12">
+  <el-col :span="8">
+    <el-card shadow="hover">
+      <div class="text item">
+      管理人数:6130
+      </div>
+      <div class="text item">
+        历史未执行人次:0
+      </div>
+    </el-card>
+  </el-col>
+  <el-col :span="8">
+    <el-card shadow="hover">
+      <div class="text item">
+        今日未执行人次:0
+      </div>
+      <div class="text item">
+        已执行人次:2
+      </div>
+    </el-card>
+  </el-col>
+  <el-col :span="8">
+    <el-card shadow="hover">
+      <div class="text item">
+        今日未执行人次:0
+      </div>
+      <div class="text item">
+        已执行人次:2
+      </div>
+    </el-card>
+  </el-col>
+</el-row>
+<el-row :gutter="12">
+<el-col :span="8">
+<el-card shadow="hover">
+<div class="text item">
+管理人数:6130
+</div>
+<div class="text item">
+历史未执行人次:0
+</div>
+</el-card>
+</el-col>
+<el-col :span="8">
+<el-card shadow="hover">
+<div class="text item">
+今日未执行人次:0
+</div>
+<div class="text item">
+已执行人次:2
+</div>
+</el-card>
+</el-col>
+<el-col :span="8">
+<el-card shadow="hover">
+<div class="text item">
+今日未执行人次:0
+</div>
+<div class="text item">
+已执行人次:2
+</div>
+</el-card>
+</el-col>
+</el-row>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Columns are always 50% wide, on mobile and desktop -->
+<div class="row">
+  <!-- 待办任务 -->
+  <div class="col-xs-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          代办任务
+        </h3>
+      </div>
+      <div class="panel-body">
+        今日待随访/回访人数: 0人次
+      </div>
+      <template>
+  <!-- 待办任务项目展示数据表格 -->
+  <el-table
+    :data="tableData"
+    stripe
+    style="width: 100%">
+    <el-table-column
+      prop="date"
+      label="日期"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="姓名"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="地址">
+    </el-table-column>
+  </el-table>
+</template>
+    </div>
+  </div>
+
+
+  <!-- 检测项目实时提醒 -->
+  <div class="col-xs-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          检测项目实时提醒
+        </h3>
+      </div>
+      <div class="panel-body">
+        Panel content
+      </div>
+
+  <!-- 检测项目实时提醒数据展示表格 -->
+  <template>
+  <el-table
+    :data="tableData"
+    stripe
+    style="width: 100%">
+    <el-table-column
+      prop="date"
+      label="日期"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="姓名"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="地址">
+    </el-table-column>
+  </el-table>
+</template>
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</body>
+<script>
+    var vue = new Vue({
+        el: '#app',
+        data:{
+          tableData: [{
+          date: '2016-05-03',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-02',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-08',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-06',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }, {
+          date: '2016-05-07',
+          name: '王小虎',
+          province: '上海',
+          city: '普陀区',
+          address: '上海市普陀区金沙江路 1518 弄',
+          zip: 200333
+        }]
+        },
+        created() {
+        },
+        methods: {
+        }
+    })
+</script>
+</html>
