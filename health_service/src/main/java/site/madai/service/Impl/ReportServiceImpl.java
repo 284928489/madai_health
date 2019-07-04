@@ -33,17 +33,17 @@ public class ReportServiceImpl implements ReportService {
     /**
      * 获得运营统计数据
      * Map数据格式：
-     *      todayNewMember -> number
-     *      totalMember -> number
-     *      thisWeekNewMember -> number
-     *      thisMonthNewMember -> number
-     *      todayOrderNumber -> number
-     *      todayVisitsNumber -> number
-     *      thisWeekOrderNumber -> number
-     *      thisWeekVisitsNumber -> number
-     *      thisMonthOrderNumber -> number
-     *      thisMonthVisitsNumber -> number
-     *      hotSetmeals -> List<Setmeal>
+     * todayNewMember -> number
+     * totalMember -> number
+     * thisWeekNewMember -> number
+     * thisMonthNewMember -> number
+     * todayOrderNumber -> number
+     * todayVisitsNumber -> number
+     * thisWeekOrderNumber -> number
+     * thisWeekVisitsNumber -> number
+     * thisMonthOrderNumber -> number
+     * thisMonthVisitsNumber -> number
+     * hotSetmeals -> List<Setmeal>
      */
     @Override
     public Map<String, Object> getBusinessReport() throws Exception {
@@ -88,19 +88,19 @@ public class ReportServiceImpl implements ReportService {
         //热门套餐（取前4）
         List<Map> hotSetmeal = orderDao.findHotSetmeal();
 
-        Map<String,Object> result = new HashMap<>();
-        result.put("reportDate",today);
-        result.put("todayNewMember",todayNewMember);
-        result.put("totalMember",totalMember);
-        result.put("thisWeekNewMember",thisWeekNewMember);
-        result.put("thisMonthNewMember",thisMonthNewMember);
-        result.put("todayOrderNumber",todayOrderNumber);
-        result.put("thisWeekOrderNumber",thisWeekOrderNumber);
-        result.put("thisMonthOrderNumber",thisMonthOrderNumber);
-        result.put("todayVisitsNumber",todayVisitsNumber);
-        result.put("thisWeekVisitsNumber",thisWeekVisitsNumber);
-        result.put("thisMonthVisitsNumber",thisMonthVisitsNumber);
-        result.put("hotSetmeal",hotSetmeal);
+        Map<String, Object> result = new HashMap<>();
+        result.put("reportDate", today);
+        result.put("todayNewMember", todayNewMember);
+        result.put("totalMember", totalMember);
+        result.put("thisWeekNewMember", thisWeekNewMember);
+        result.put("thisMonthNewMember", thisMonthNewMember);
+        result.put("todayOrderNumber", todayOrderNumber);
+        result.put("thisWeekOrderNumber", thisWeekOrderNumber);
+        result.put("thisMonthOrderNumber", thisMonthOrderNumber);
+        result.put("todayVisitsNumber", todayVisitsNumber);
+        result.put("thisWeekVisitsNumber", thisWeekVisitsNumber);
+        result.put("thisMonthVisitsNumber", thisMonthVisitsNumber);
+        result.put("hotSetmeal", hotSetmeal);
 
         return result;
     }

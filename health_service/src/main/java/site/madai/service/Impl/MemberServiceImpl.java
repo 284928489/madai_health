@@ -36,9 +36,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-    public List<Integer> findMemberCountByMonth(List<String> month){
+    public List<Integer> findMemberCountByMonth(List<String> month) {
         List<Integer> list = new ArrayList<>();
-        for(String m : month){
+        for (String m : month) {
             m = m + ".31";//格式：2019.04.31
             Integer count = memberDao.findMemberCountBeforeDate(m);
             list.add(count);

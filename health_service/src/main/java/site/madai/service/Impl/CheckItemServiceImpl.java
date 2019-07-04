@@ -29,14 +29,14 @@ public class CheckItemServiceImpl implements CheckItemService {
     private CheckItemDao checkItemDao;
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public PageResult queryPage(QueryPageBean queryPageBean) {
         //1. 开始分页
-        PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
+        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
         //2. 查询所有
-        Page<CheckItem> page  = checkItemDao.findByCondition(queryPageBean.getQueryString());
+        Page<CheckItem> page = checkItemDao.findByCondition(queryPageBean.getQueryString());
         //3. 返回对象
-        return new PageResult(page.getTotal(), page,queryPageBean.getCurrentPage());
+        return new PageResult(page.getTotal(), page, queryPageBean.getCurrentPage());
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CheckItemServiceImpl implements CheckItemService {
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public CheckItem findById(Integer id) {
         return checkItemDao.findById(id);
     }
@@ -59,13 +59,13 @@ public class CheckItemServiceImpl implements CheckItemService {
     public void delById(Integer id) {
         long count =
                 checkItemDao.getCheckItemIdCountFrom_t_checkgroup_checkitemByCheckitemId(id);
-        if(count > 0)
+        if (count > 0)
             throw new RuntimeException("该检查项被检查组关联，不能被删除");
         checkItemDao.delById(id);
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<CheckItem> findAll() {
         return checkItemDao.findAll();
     }

@@ -14,6 +14,7 @@ import java.util.Set;
 
 /**
  * 清理图片的任务
+ *
  * @author shaodi wang
  * @Company http://www.ithiema.com
  * @Version 1.0
@@ -28,11 +29,11 @@ public class ClearImgJob {
     @Qualifier("jedisPool")
     private JedisPool jedisPool;
 
-    public void init(){
+    public void init() {
         List<String> setmealList = setmealService.findAllImg();
         for (String s : setmealList) {
-            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,s);
-            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES,s);
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES, s);
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES, s);
         }
     }
 
@@ -41,7 +42,7 @@ public class ClearImgJob {
      * 2. 删除七牛云上的垃圾图片
      * 3. 删除redis集合中的垃圾图片名称
      */
-    public void clearImg(){
+    public void clearImg() {
 //             * 1. 获取垃圾图片的名称集合：获取redis集合的差值
         Set<String> imgSet = jedisPool.getResource().sdiff(RedisConstant.SETMEAL_PIC_RESOURCES, RedisConstant.SETMEAL_PIC_DB_RESOURCES);
         for (String imgName : imgSet) {

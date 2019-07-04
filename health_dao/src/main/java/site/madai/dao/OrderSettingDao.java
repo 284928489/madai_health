@@ -15,7 +15,6 @@ import java.util.List;
  */
 public interface OrderSettingDao {
     /**
-     *
      * @param orderDate formate : yyyy-MM-dd
      * @return
      */

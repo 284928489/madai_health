@@ -37,10 +37,10 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     public void delCheckgroupById(Integer id) {
         long count =
                 checkGroupDao.getCheckgroupidCountFrom_T_setmeal_checkgroup(id);
-        if(count > 0)
+        if (count > 0)
             throw new RuntimeException("该检查组被多个检查套餐使用，不能删除");
         count = checkGroupDao.getCheckgroupidCountFrom_T_checkgroup_checkitem(id);
-        if(count > 0)
+        if (count > 0)
             // 有外键先删除外键约束
             checkGroupDao.deleteAssociationFrom_T_checkgroup_checkitemByCheckgroupid(id);
         // 根据id删除检查组
@@ -48,7 +48,7 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Setmeal> findAll() {
         return checkGroupDao.findAll();
     }
@@ -58,19 +58,19 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         //根据检查组id删除中间表数据（清理原有关联关系）
         checkGroupDao.deleteAssociationFrom_T_checkgroup_checkitemByCheckgroupid(checkGroup.getId());
         //向中间表(t_checkgroup_checkitem)插入数据（建立检查组和检查项关联关系）
-        setCheckGroupAndCheckItem(checkGroup.getId(),checkitemIds);
+        setCheckGroupAndCheckItem(checkGroup.getId(), checkitemIds);
         //更新检查组基本信息
         checkGroupDao.edit(checkGroup);
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public CheckGroup findById(Integer id) {
         return checkGroupDao.findById(id);
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
         return checkGroupDao.findCheckItemIdsByCheckGroupId(id);
     }
@@ -78,29 +78,30 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     @Override
     public void add(CheckGroup checkGroup, Integer[] checkitemIds) {
         checkGroupDao.add(checkGroup);
-        setCheckGroupAndCheckItem(checkGroup.getId(),checkitemIds);
+        setCheckGroupAndCheckItem(checkGroup.getId(), checkitemIds);
     }
+
     //设置检查组合和检查项的关联关系
-    private void setCheckGroupAndCheckItem(Integer checkGroupId, Integer[] checkitemIds){
-        if(checkitemIds != null && checkitemIds.length > 0){
+    private void setCheckGroupAndCheckItem(Integer checkGroupId, Integer[] checkitemIds) {
+        if (checkitemIds != null && checkitemIds.length > 0) {
             for (Integer checkitemId : checkitemIds) {
-                Map<String,Integer> map = new HashMap<>();
-                map.put("checkgroup_id",checkGroupId);
-                map.put("checkitem_id",checkitemId);
+                Map<String, Integer> map = new HashMap<>();
+                map.put("checkgroup_id", checkGroupId);
+                map.put("checkitem_id", checkitemId);
                 checkGroupDao.setCheckGroupAndCheckItem(map);
             }
         }
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public PageResult queryPage(QueryPageBean queryPageBean) {
         //1. 开始分页
-        PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
+        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
         //2. 查询所有
-        Page<CheckItem> page  =
+        Page<CheckItem> page =
                 checkGroupDao.findByCondition(queryPageBean.getQueryString());
         //3. 返回对象
-        return new PageResult(page.getTotal(), page,queryPageBean.getCurrentPage());
+        return new PageResult(page.getTotal(), page, queryPageBean.getCurrentPage());
     }
 }

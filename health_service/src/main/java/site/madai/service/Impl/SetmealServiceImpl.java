@@ -38,25 +38,25 @@ public class SetmealServiceImpl implements SetmealService {
     private JedisPool jedisPool;
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Map<String, Object>> findSetmealCount() {
         return setmealDao.findSetmealCount();
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<String> findAllImg() {
         return setmealDao.findAllImg();
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Setmeal findSetmealByIdformobile(Integer id) {
         return setmealDao.findSetmealByIdformobile(id);
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Setmeal> getAllSetmeal() {
         return setmealDao.getAllSetmeal();
     }
@@ -65,10 +65,10 @@ public class SetmealServiceImpl implements SetmealService {
     public void delSetmealById(Integer id) {
         long count =
                 setmealDao.getSetmealidCountFrom_t_order(id);
-        if(count > 0)
+        if (count > 0)
             throw new RuntimeException("该套餐正在被订单使用，不能删除");
         count = setmealDao.getSetmealidCountFrom_t_setmeal_checkgroup(id);
-        if(count > 0)
+        if (count > 0)
             // 有外键先删除外键约束
             setmealDao.deleteAssociationFrom_t_setmeal_checkgroupBySetmealId(id);
         // 根据id删除检查组
@@ -79,15 +79,15 @@ public class SetmealServiceImpl implements SetmealService {
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public PageResult findByPage(QueryPageBean queryPageBean) {
         //1. 开始分页
-        PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
+        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
         //2. 查询所有
-        Page<CheckItem> page  =
+        Page<CheckItem> page =
                 setmealDao.findByCondition(queryPageBean.getQueryString());
         //3. 返回对象
-        return new PageResult(page.getTotal(), page,queryPageBean.getCurrentPage());
+        return new PageResult(page.getTotal(), page, queryPageBean.getCurrentPage());
     }
 
     @Override
@@ -95,20 +95,20 @@ public class SetmealServiceImpl implements SetmealService {
         //根据检查组id删除中间表数据（清理原有关联关系）
         setmealDao.deleteAssociationFrom_t_setmeal_checkgroupBySetmealId(setmeal.getId());
         //向中间表(t_checkgroup_checkitem)插入数据（建立检查组和检查项关联关系）
-        setCheckGroupAndSetmeal(setmeal.getId(),checkgroupIds);
+        setCheckGroupAndSetmeal(setmeal.getId(), checkgroupIds);
         //更新检查组基本信息
         setmealDao.edit(setmeal);
-        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,setmeal.getImg());
+        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES, setmeal.getImg());
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public List<Integer> findCheckGroupIdsBySetmealId(Integer id) {
         return setmealDao.findCheckGroupIdsBySetmealId(id);
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public Setmeal findById(Integer id) {
         return setmealDao.findById(id);
     }
@@ -116,16 +116,16 @@ public class SetmealServiceImpl implements SetmealService {
     @Override
     public void add(Setmeal setmeal, Integer[] checkGroupIds) {
         setmealDao.add(setmeal);
-        setCheckGroupAndSetmeal(setmeal.getId(),checkGroupIds);
+        setCheckGroupAndSetmeal(setmeal.getId(), checkGroupIds);
         //新增成功
-        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,setmeal.getImg());
+        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES, setmeal.getImg());
     }
 
     private void setCheckGroupAndSetmeal(Integer setmealId,
-                                         Integer[] checkGroupIds){
-        if(checkGroupIds != null && checkGroupIds.length > 0){
+                                         Integer[] checkGroupIds) {
+        if (checkGroupIds != null && checkGroupIds.length > 0) {
             for (Integer checkGroupId : checkGroupIds) {
-                setmealDao.setCheckGroupAndSetmeal(setmealId,checkGroupId);
+                setmealDao.setCheckGroupAndSetmeal(setmealId, checkGroupId);
             }
         }
     }

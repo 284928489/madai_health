@@ -18,12 +18,12 @@ import com.qiniu.util.Auth;
  * @Version: 1.0
  */
 public class QiniuUtils {
-//    public  static String accessKey = "dulF9Wze9bxujtuRvu3yyYb9JX1Sp23jzd3tO708";
+    //    public  static String accessKey = "dulF9Wze9bxujtuRvu3yyYb9JX1Sp23jzd3tO708";
     private static String accessKey = "7tG8tpg706Hr0MkTGUNHY3ijunPCB0psqzHS6eus";
-//    public  static String secretKey = "vZkhW7iot3uWwcWz9vXfbaP4JepdWADFDHVLMZOe";
+    //    public  static String secretKey = "vZkhW7iot3uWwcWz9vXfbaP4JepdWADFDHVLMZOe";
     private static String secretKey = "JvLC-rSsUc9T4ENafoIu4osKj-xCRsmn" +
-        "-_3ccNmI";
-//    public  static String bucket = "qiniutest";
+            "-_3ccNmI";
+    //    public  static String bucket = "qiniutest";
     private static String bucket = "big-health";
 
     private final static String CLOUD_URL = "http://ptqfhbbhp.bkt.clouddn.com/";
@@ -32,7 +32,7 @@ public class QiniuUtils {
         return CLOUD_URL;
     }
 
-    public static void upload2Qiniu(String filePath, String fileName){
+    public static void upload2Qiniu(String filePath, String fileName) {
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone2());
         UploadManager uploadManager = new UploadManager(cfg);
@@ -54,7 +54,7 @@ public class QiniuUtils {
     }
 
     //上传文件
-    public static void upload2Qiniu(byte[] bytes, String fileName){
+    public static void upload2Qiniu(byte[] bytes, String fileName) {
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone2());
         //...其他参数参考类注释
@@ -81,7 +81,7 @@ public class QiniuUtils {
     }
 
     //删除文件
-    public static void deleteFileFromQiniu(String fileName){
+    public static void deleteFileFromQiniu(String fileName) {
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone2());
         Auth auth = Auth.create(accessKey, secretKey);

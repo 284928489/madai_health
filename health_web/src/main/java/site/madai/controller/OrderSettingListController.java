@@ -30,12 +30,11 @@ public class OrderSettingListController {
     private OrderSettingListService orderSettingListService;
 
 
-
     @RequestMapping("findByPage")
-    public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = orderSettingListService.queryPage(queryPageBean);
-        if(pageResult.getRows().size() == 0){
-            if ((queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0)||(queryPageBean.getDateRangeList() != null && queryPageBean.getDateRangeList().size() > 0)){
+        if (pageResult.getRows().size() == 0) {
+            if ((queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0) || (queryPageBean.getDateRangeList() != null && queryPageBean.getDateRangeList().size() > 0)) {
                 queryPageBean.setCurrentPage(1);
                 pageResult = orderSettingListService.queryPage(queryPageBean);
             }
@@ -44,7 +43,7 @@ public class OrderSettingListController {
     }
 
     @RequestMapping("delOrderSettingById")
-    public Result delOrderSettingById(Integer id){
+    public Result delOrderSettingById(Integer id) {
         try {
             orderSettingListService.delOrderSettingById(id);
             return new Result(true, MessageConstant.DELETE_ORDER_SUCCESS);

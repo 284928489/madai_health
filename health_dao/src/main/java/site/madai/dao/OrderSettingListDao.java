@@ -14,5 +14,5 @@ import java.util.Map;
  * @Version: 1.0
  */
 public interface OrderSettingListDao {
-    Page<Map<String, Object>> findByCondition(Map<String,Object> conditionMap);
+    Page<Map<String, Object>> findByCondition(Map<String, Object> conditionMap);
 }

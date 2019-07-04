@@ -41,8 +41,8 @@ public class CheckItemController {
     @RequestMapping("findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = checkItemService.queryPage(queryPageBean);
-        if(pageResult.getRows().size() == 0){
-            if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0){
+        if (pageResult.getRows().size() == 0) {
+            if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0) {
                 queryPageBean.setCurrentPage(1);
                 pageResult = checkItemService.queryPage(queryPageBean);
             }

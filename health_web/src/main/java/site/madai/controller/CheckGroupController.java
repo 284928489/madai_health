@@ -93,8 +93,8 @@ public class CheckGroupController {
     @RequestMapping("findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = checkGroupService.queryPage(queryPageBean);
-        if(pageResult.getRows().size() == 0){
-            if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0){
+        if (pageResult.getRows().size() == 0) {
+            if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0) {
                 queryPageBean.setCurrentPage(1);
                 pageResult = checkGroupService.queryPage(queryPageBean);
             }

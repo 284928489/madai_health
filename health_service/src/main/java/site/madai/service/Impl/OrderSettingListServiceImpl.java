@@ -38,24 +38,24 @@ public class OrderSettingListServiceImpl implements OrderSettingListService {
     }
 
     @Override
-    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     public PageResult queryPage(QueryPageBean queryPageBean) {
         //1. 开始分页
-        PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
+        PageHelper.startPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize());
         //2. 查询所有
-        Map<String,Object> conditionMap = new HashMap<>();
-        conditionMap.put("queryString",queryPageBean.getQueryString());
-        if(queryPageBean.getDateRangeList() != null){
-            if (queryPageBean.getDateRangeList().size() > 0){
-                conditionMap.put("startDate",queryPageBean.getDateRangeList().get(0));
-                if (queryPageBean.getDateRangeList().size() > 1){
-                    conditionMap.put("endDate",queryPageBean.getDateRangeList().get(1));
+        Map<String, Object> conditionMap = new HashMap<>();
+        conditionMap.put("queryString", queryPageBean.getQueryString());
+        if (queryPageBean.getDateRangeList() != null) {
+            if (queryPageBean.getDateRangeList().size() > 0) {
+                conditionMap.put("startDate", queryPageBean.getDateRangeList().get(0));
+                if (queryPageBean.getDateRangeList().size() > 1) {
+                    conditionMap.put("endDate", queryPageBean.getDateRangeList().get(1));
                 }
             }
         }
-        Page<Map<String,Object>> page  =
+        Page<Map<String, Object>> page =
                 orderSettingListDao.findByCondition(conditionMap);
         //3. 返回对象
-        return new PageResult(page.getTotal(), page,queryPageBean.getCurrentPage());
+        return new PageResult(page.getTotal(), page, queryPageBean.getCurrentPage());
     }
 }

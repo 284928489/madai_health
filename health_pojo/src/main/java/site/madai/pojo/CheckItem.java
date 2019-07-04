@@ -3,7 +3,6 @@ package site.madai.pojo;
 import java.io.Serializable;
 
 /**
- *
  * 如果对对象进行持久化，那么对象必须进行序列化
  * 检查项
  */

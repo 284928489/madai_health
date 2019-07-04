@@ -24,18 +24,19 @@ public class SMSUtils {
     public static final String VALIDATE_CODE = "SMS_169112710";//发送短信验证码
     public static final String ORDER_NOTICE = "SMS_169112725";//体检预约成功通知
 
-    public static void main(String[] args)throws Exception {
-        SMSUtils.sendShortMessage("SMS_169112710","18511085915","1234");
+    public static void main(String[] args) throws Exception {
+        SMSUtils.sendShortMessage("SMS_169112710", "18511085915", "1234");
 //        SMSUtils.sendShortMessage("SMS_169112725","18242263416","12345");
     }
 
     /**
      * 发送短信
+     *
      * @param phoneNumbers
      * @param param
      * @throws ClientException
      */
-    public static void sendShortMessage(String templateCode,String phoneNumbers,String param) throws ClientException {
+    public static void sendShortMessage(String templateCode, String phoneNumbers, String param) throws ClientException {
         // 设置超时时间-可自行调整
         System.setProperty("sun.net.client.defaultConnectTimeout", "10000");
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
@@ -61,7 +62,7 @@ public class SMSUtils {
         request.setTemplateCode(templateCode);
         // 可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         // 友情提示:如果JSON中需要带换行符,请参照标准的JSON协议对换行符的要求,比如短信内容中包含\r\n的情况在JSON中需要表示成\\r\\n,否则会导致JSON在服务端解析失败
-        request.setTemplateParam("{\"code\":\""+param+"\"}");
+        request.setTemplateParam("{\"code\":\"" + param + "\"}");
         // 可选-上行短信扩展码(扩展码字段控制在7位或以下，无特殊需求用户请忽略此字段)
         // request.setSmsUpExtendCode("90997");
         // 可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者
@@ -71,7 +72,7 @@ public class SMSUtils {
         if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
             // 请求成功
             System.out.println(sendSmsResponse.getMessage());
-        }else{
+        } else {
             System.out.println(sendSmsResponse.getMessage());
         }
     }
