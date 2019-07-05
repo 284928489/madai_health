@@ -110,34 +110,34 @@ public class POIUtils {
         if (cell == null) {
             return cellValue;
         }
-        //如果当前单元格内容为日期类型，需要特殊处理
-//        String dataFormatString = cell.getCellStyle().getDataFormatString();
-//        if(dataFormatString.equals("m/d/yy")){
-//            cellValue = new SimpleDateFormat(DATE_FORMAT).format(cell.getDateCellValue());
-//            return cellValue;
-//        }
         //把数字当成String来读，避免出现1读成1.0的情况
         if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
             cell.setCellType(Cell.CELL_TYPE_STRING);
         }
         //判断数据的类型
         switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_NUMERIC: //数字
+            //数字
+            case Cell.CELL_TYPE_NUMERIC:
                 cellValue = String.valueOf(cell.getNumericCellValue());
                 break;
-            case Cell.CELL_TYPE_STRING: //字符串
+            //字符串
+            case Cell.CELL_TYPE_STRING:
                 cellValue = String.valueOf(cell.getStringCellValue());
                 break;
-            case Cell.CELL_TYPE_BOOLEAN: //Boolean
+            //Boolean
+            case Cell.CELL_TYPE_BOOLEAN:
                 cellValue = String.valueOf(cell.getBooleanCellValue());
                 break;
-            case Cell.CELL_TYPE_FORMULA: //公式
+            //公式
+            case Cell.CELL_TYPE_FORMULA:
                 cellValue = String.valueOf(cell.getCellFormula());
                 break;
-            case Cell.CELL_TYPE_BLANK: //空值
+            //空值
+            case Cell.CELL_TYPE_BLANK:
                 cellValue = "";
                 break;
-            case Cell.CELL_TYPE_ERROR: //故障
+            //故障
+            case Cell.CELL_TYPE_ERROR:
                 cellValue = "非法字符";
                 break;
             default:

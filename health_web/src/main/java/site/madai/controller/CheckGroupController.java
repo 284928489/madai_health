@@ -31,8 +31,9 @@ public class CheckGroupController {
     @RequestMapping("findAll")
     public Result findAll() {
         List<Setmeal> checkGrouplist = checkGroupService.findAll();
-        if (checkGrouplist != null && checkGrouplist.size() > 0)
+        if (checkGrouplist != null && checkGrouplist.size() > 0){
             return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkGrouplist);
+        }
         return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
     }
 
@@ -50,7 +51,9 @@ public class CheckGroupController {
         }
     }
 
-    //编辑
+    /**
+     * 编辑
+     */
     @RequestMapping("edit")
     public Result edit(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         try {
@@ -61,7 +64,9 @@ public class CheckGroupController {
         return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
     }
 
-    //根据检查组合id查询对应的所有检查项id
+    /**
+     * 根据检查组合id查询对应的所有检查项id
+     */
     @RequestMapping("findCheckItemIdsByCheckGroupId")
     public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
         return checkGroupService.findCheckItemIdsByCheckGroupId(id);

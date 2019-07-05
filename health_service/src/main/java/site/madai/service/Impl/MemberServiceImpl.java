@@ -39,7 +39,8 @@ public class MemberServiceImpl implements MemberService {
     public List<Integer> findMemberCountByMonth(List<String> month) {
         List<Integer> list = new ArrayList<>();
         for (String m : month) {
-            m = m + ".31";//格式：2019.04.31
+            //格式：2019.04.31
+            m = m + ".31";
             Integer count = memberDao.findMemberCountBeforeDate(m);
             list.add(count);
         }

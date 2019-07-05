@@ -67,8 +67,9 @@ public class SetmealController {
     @RequestMapping("upload")
     public Result upload(@RequestBody MultipartFile imgFile) {
         String originalFilename = imgFile.getOriginalFilename();
-        if (originalFilename == null || originalFilename.length() == 0)
+        if (originalFilename == null || originalFilename.length() == 0){
             return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
+        }
         //生成唯一的文件名称
         //uuid 的名称
         String uuid = UUID.randomUUID().toString().replace("-", "");
@@ -123,7 +124,6 @@ public class SetmealController {
             setmealService.delSetmealById(id);
             return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
         } catch (RuntimeException e) {
-//            e.printStackTrace();
             return new Result(false, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();

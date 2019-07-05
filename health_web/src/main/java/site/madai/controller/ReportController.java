@@ -86,7 +86,8 @@ public class ReportController {
     @RequestMapping("getMemberReport")
     public Result getMemberReport() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -12);//获得当前日期之前12个月的日期
+        //获得当前日期之前12个月的日期
+        calendar.add(Calendar.MONTH, -12);
 
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
@@ -137,37 +138,52 @@ public class ReportController {
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             XSSFRow row = sheet.getRow(2);
-            row.getCell(5).setCellValue(reportDate);//日期
+            //日期
+            row.getCell(5).setCellValue(reportDate);
 
             row = sheet.getRow(4);
-            row.getCell(5).setCellValue(todayNewMember);//新增会员数（本日）
-            row.getCell(7).setCellValue(totalMember);//总会员数
+            //新增会员数（本日）
+            row.getCell(5).setCellValue(todayNewMember);
+            //总会员数
+            row.getCell(7).setCellValue(totalMember);
 
             row = sheet.getRow(5);
-            row.getCell(5).setCellValue(thisWeekNewMember);//本周新增会员数
-            row.getCell(7).setCellValue(thisMonthNewMember);//本月新增会员数
+            //本周新增会员数
+            row.getCell(5).setCellValue(thisWeekNewMember);
+            //本月新增会员数
+            row.getCell(7).setCellValue(thisMonthNewMember);
 
             row = sheet.getRow(7);
-            row.getCell(5).setCellValue(todayOrderNumber);//今日预约数
-            row.getCell(7).setCellValue(todayVisitsNumber);//今日到诊数
+            //今日预约数
+            row.getCell(5).setCellValue(todayOrderNumber);
+            //今日到诊数
+            row.getCell(7).setCellValue(todayVisitsNumber);
 
             row = sheet.getRow(8);
-            row.getCell(5).setCellValue(thisWeekOrderNumber);//本周预约数
-            row.getCell(7).setCellValue(thisWeekVisitsNumber);//本周到诊数
+            //本周预约数
+            row.getCell(5).setCellValue(thisWeekOrderNumber);
+            //本周到诊数
+            row.getCell(7).setCellValue(thisWeekVisitsNumber);
 
             row = sheet.getRow(9);
-            row.getCell(5).setCellValue(thisMonthOrderNumber);//本月预约数
-            row.getCell(7).setCellValue(thisMonthVisitsNumber);//本月到诊数
+            //本月预约数
+            row.getCell(5).setCellValue(thisMonthOrderNumber);
+            //本月到诊数
+            row.getCell(7).setCellValue(thisMonthVisitsNumber);
 
             int rowNum = 12;
-            for (Map map : hotSetmeal) {//热门套餐
+            //热门套餐
+            for (Map map : hotSetmeal) {
                 String name = (String) map.get("name");
                 Long setmeal_count = (Long) map.get("setmeal_count");
                 BigDecimal proportion = (BigDecimal) map.get("proportion");
                 row = sheet.getRow(rowNum++);
-                row.getCell(4).setCellValue(name);//套餐名称
-                row.getCell(5).setCellValue(setmeal_count);//预约数量
-                row.getCell(6).setCellValue(proportion.doubleValue());//占比
+                //套餐名称
+                row.getCell(4).setCellValue(name);
+                //预约数量
+                row.getCell(5).setCellValue(setmeal_count);
+                //占比
+                row.getCell(6).setCellValue(proportion.doubleValue());
             }
 
             //通过输出流进行文件下载

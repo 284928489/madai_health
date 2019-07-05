@@ -50,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     //体检预约
+    @Override
     public Result order(Map map) throws Exception {
         //检查当前日期是否进行了预约设置
         String orderDate = (String) map.get("orderDate");
@@ -60,8 +61,10 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //检查预约日期是否预约已满
-        int number = orderSetting.getNumber();//可预约人数
-        int reservations = orderSetting.getReservations();//已预约人数
+        //可预约人数
+        int number = orderSetting.getNumber();
+        //已预约人数
+        int reservations = orderSetting.getReservations();
         if (reservations >= number) {
             //预约已满，不能预约
             return new Result(false, MessageConstant.ORDER_FULL);

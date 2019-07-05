@@ -81,7 +81,10 @@ public class CheckItemController {
         }
     }
 
-    //查询所有
+    /**
+     * 查询所有的检查项信息
+     * @return 返回类型 Result
+     */
     @RequestMapping("findAll")
     public Result findAll() {
         List<CheckItem> checkItemList = checkItemService.findAll();

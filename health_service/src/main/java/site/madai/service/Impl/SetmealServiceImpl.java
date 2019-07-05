@@ -65,12 +65,14 @@ public class SetmealServiceImpl implements SetmealService {
     public void delSetmealById(Integer id) {
         long count =
                 setmealDao.getSetmealidCountFrom_t_order(id);
-        if (count > 0)
+        if (count > 0){
             throw new RuntimeException("该套餐正在被订单使用，不能删除");
+        }
         count = setmealDao.getSetmealidCountFrom_t_setmeal_checkgroup(id);
-        if (count > 0)
+        if (count > 0){
             // 有外键先删除外键约束
             setmealDao.deleteAssociationFrom_t_setmeal_checkgroupBySetmealId(id);
+        }
         // 根据id删除检查组
         Setmeal setmeal = setmealDao.findById(id);
         setmealDao.deleteSetmealById(id);

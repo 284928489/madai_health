@@ -37,12 +37,14 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     public void delCheckgroupById(Integer id) {
         long count =
                 checkGroupDao.getCheckgroupidCountFrom_T_setmeal_checkgroup(id);
-        if (count > 0)
+        if (count > 0){
             throw new RuntimeException("该检查组被多个检查套餐使用，不能删除");
+        }
         count = checkGroupDao.getCheckgroupidCountFrom_T_checkgroup_checkitem(id);
-        if (count > 0)
+        if (count > 0){
             // 有外键先删除外键约束
             checkGroupDao.deleteAssociationFrom_T_checkgroup_checkitemByCheckgroupid(id);
+        }
         // 根据id删除检查组
         checkGroupDao.deleteCheckgroupById(id);
     }

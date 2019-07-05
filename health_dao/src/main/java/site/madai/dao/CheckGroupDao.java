@@ -17,8 +17,17 @@ import java.util.Map;
  */
 public interface CheckGroupDao {
 
+    /**
+     * 分页条件查询方法
+     * @param queryString
+     * @return
+     */
     Page<CheckItem> findByCondition(String queryString);
 
+    /**
+     * 根据checkgroup添加
+     * @param checkGroup
+     */
     void add(CheckGroup checkGroup);
 
     void setCheckGroupAndCheckItem(Map<String, Integer> map);

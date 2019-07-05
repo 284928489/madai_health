@@ -59,8 +59,9 @@ public class CheckItemServiceImpl implements CheckItemService {
     public void delById(Integer id) {
         long count =
                 checkItemDao.getCheckItemIdCountFrom_t_checkgroup_checkitemByCheckitemId(id);
-        if (count > 0)
+        if (count > 0){
             throw new RuntimeException("该检查项被检查组关联，不能被删除");
+        }
         checkItemDao.delById(id);
     }
 
