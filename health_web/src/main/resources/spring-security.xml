@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- 授权 -->
+    <!--资源放行-->
+    <!--
+        1. 安全框架有记忆功能，会自动记录上一次被拦截的请求，
+        2. 谷歌、火狐浏览器，访问被拒绝时会自动请求 favicon.ico图标，安全框架记录的请求 favicon.ico
+        解决思路：不对favicon.ico 拦截
+    -->
+    <security:http pattern="/favicon.ico" security="none"/>
+
+    <!--匿名访问资源：对资源放行-->
+    <!--需要放行的资源：登录页面，认证错误页面, 静态资源（js,img,css,plugins）-->
+    <!--<security:http pattern="/css/**" security="none"/>-->
+    <!--<security:http pattern="/img/**" security="none"/>-->
+    <!--<security:http pattern="/js/**" security="none"/>-->
+    <!--<security:http pattern="/plugins/**" security="none"/>-->
+    <!--<security:http pattern="/login.html" security="none"/>-->
+    <!--<security:http pattern="/error.html" security="none"/>-->
+
+    <!--
+        auto-config: 使用使用框架自带的内容
+        use-expressions: 是否使用spring提供表达式
+    -->
+    <security:http auto-config="true" use-expressions="true">
+
+        <security:headers>
+            <!--设置在页面可以通过iframe访问受保护的页面，默认为不允许访问   同源-->
+            <security:frame-options policy="SAMEORIGIN"/>
+        </security:headers>
+        <!--
+            intercept-url: 拦截的规则
+            pattern: 表达式  /** 拦截所有的内容
+            access: 需要的权限
+
+          含义：用户必须拥有 ROLE_USER的权限才可以访问所有的资源
+        -->
+        <security:intercept-url pattern="/pages/**" access="isAuthenticated()"/>
+        <!--配置自定义登录页面
+            login-page: 登录页面
+            login-processing-url: 登录请求路径
+            authentication-failure-url: 认证失败后的页面
+            default-target-url: 登录成功默认跳转的页面
+        -->
+        <security:form-login
+            login-page="/login.html"
+            login-processing-url="/login.do"
+            authentication-failure-url="/login.html"
+            default-target-url="/pages/main.html"
+            username-parameter="username"
+            password-parameter="password"/>
+        <!--关闭跨站请求伪造-->
+        <!--
+            1. 使用硬件技术解决问题
+            2. 使用代码解决问题(了解)
+                1)disabled="true" 改成 disabled="false"
+                2) 创建登录页面（jsp）
+                    登录表单添加隐藏域
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                3) 不能对登录页面拦截, 不能使用/** 拦截， 修改为/pages/**
+                4) 修改登录页面修改为 login.jsp
+        -->
+        <security:csrf disabled="true"/>
+
+        <!--配置退出功能-->
+        <!--
+        invalidate-session; 清空session
+        logout-url; 退出拦截的路径
+        logout-success-url; 退出成功后跳转的路径
+        -->
+        <security:logout
+            invalidate-session="true"
+            logout-url="/logout.do"
+            logout-success-url="/login.html"/>
+
+        <!--配置403页面-->
+        <!--<security:access-denied-handler error-page="/403.html"/>-->
+
+    </security:http>
+
+    <!-- 认证 -->
+    <security:authentication-manager>
+        <!--认证信息的提供者
+            user-service-ref: 关联实现了UserDetailsService接口的实现类
+        -->
+        <security:authentication-provider
+                user-service-ref="springSecurityUserServiceImpl">
+            <!--关联一个加密工具类型-->
+            <security:password-encoder ref="passwordEncoder"/>
+        </security:authentication-provider>
+
+    </security:authentication-manager>
+
+    <!--加密工具类-->
+    <bean id="passwordEncoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <!--开启注解配置-->
+    <security:global-method-security pre-post-annotations="enabled"/>
+
+
+</beans>

@@ -1,6 +1,7 @@
 package site.madai.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ public class OrderSettingController {
     private OrderSettingService orderSettingService;
 
     @RequestMapping("saveOrEdit")
+    @PreAuthorize("hasAuthority('ORDERSETTING')")
     public Result saveOrEdit(@RequestBody OrderSetting orderSetting) {
         try {
             List<OrderSetting> orderSettingList = new ArrayList<>();
@@ -46,6 +48,7 @@ public class OrderSettingController {
     }
 
     @RequestMapping("findByMonth")
+    @PreAuthorize("hasAuthority('ORDERSETTING')")
     public Result findByMonth(String month) {
         try {
             List<OrderSetting> orderSettingList = orderSettingService.findByMonth(month);
@@ -84,6 +87,7 @@ public class OrderSettingController {
     }
 
     @RequestMapping("upload")
+    @PreAuthorize("hasAuthority('ORDERSETTING')")
     public Result upload(@RequestBody MultipartFile excelFile) {
         try {
             List<String[]> stringsList = POIUtils.readExcel(excelFile);

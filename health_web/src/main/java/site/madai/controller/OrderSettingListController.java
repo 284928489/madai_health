@@ -2,6 +2,7 @@ package site.madai.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,7 @@ public class OrderSettingListController {
 
 
     @RequestMapping("findByPage")
+    @PreAuthorize("hasAuthority('ORDERSETTING')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = orderSettingListService.queryPage(queryPageBean);
         if (pageResult.getRows().size() == 0) {
@@ -43,6 +45,7 @@ public class OrderSettingListController {
     }
 
     @RequestMapping("delOrderSettingById")
+    @PreAuthorize("hasAuthority('ORDERSETTING')")
     public Result delOrderSettingById(Integer id) {
         try {
             orderSettingListService.delOrderSettingById(id);

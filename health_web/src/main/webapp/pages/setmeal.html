@@ -449,7 +449,7 @@
                             });
 
                             }).catch((err)=>{
-                                this.$message.error("unkown error! =>"+err);
+                                this.showMessage(err);
                                 console.log(err);
                             }).finally(()=>{
                                  //         2) 关闭弹出窗口
@@ -478,7 +478,7 @@
                         this.pagination.total = res.data.total;
                         this.pagination.currentPage = res.data.currentPage;
                     }).catch((err) => {
-                        this.$message.error(err);
+                        this.showMessage(err);
                         console.log(err);
                     });
                 },
@@ -500,7 +500,7 @@
                     axios.get("/checkgroup/findAll.do").then((res)=>{
                         this.tableData = res.data.data;
                     }).catch((err)=>{
-                        this.$message.error(err);
+                        this.showMessage(err);
                         console.log(err);
                     });
                 },
@@ -536,7 +536,7 @@
                             this.$message.error("获取数据失败，请刷新当前页面");
                         }
                     }).catch((err)=>{
-                        this.$message.error("unkown error =>"+err);
+                        this.showMessage(err);
                         console.log(err);
                     });
                 },
@@ -553,7 +553,7 @@
                                     type: response.data.flag ? 'success' : 'error'
                                 });
                             }).catch((err)=>{
-                                this.$message.error("unkown error! =>"+err);
+                                this.showMessage(err);
                                 console.log(err);
                             }).finally(()=> {
                                 //隐藏编辑窗口
@@ -585,7 +585,7 @@
                                 message: res.data.message
                             });
                         }).catch((err)=>{
-                            this.$message.error("unkown error =>" + err);
+                            this.showMessage(err);
                             console.log(err);
                         }).finally(() => {
                             //4. 查询
@@ -598,6 +598,19 @@
                             message: '已取消删除'
                         })
                     });
+                },
+                showMessage(err){
+                    if(err == 'Error: Request failed with status code 403'){
+                        this.$message({
+                            type: 'warning',
+                            message: '权限不足'
+                        });
+                    }else{
+                        this.$message({
+                            type: 'warning',
+                            message: "unkown error =>" + err
+                        });
+                    }
                 }
             }
         })

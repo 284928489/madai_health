@@ -3,6 +3,7 @@ package site.madai.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,7 @@ public class SetmealController {
 
     //编辑
     @RequestMapping("edit")
+    @PreAuthorize("hasAuthority('SETMEAL_EDIT')")
     public Result edit(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
         try {
             setmealService.edit(setmeal, checkgroupIds);
@@ -52,6 +54,7 @@ public class SetmealController {
     }
 
     @RequestMapping("add")
+    @PreAuthorize("hasAuthority('SETMEAL_ADD')")
     public Result add(@RequestBody Setmeal setmeal,
                       @RequestParam("checkgroupIds") Integer[] checkgroupIds) {
         try {
@@ -65,6 +68,7 @@ public class SetmealController {
     }
 
     @RequestMapping("upload")
+    @PreAuthorize("hasAuthority('SETMEAL_QUERY')")
     public Result upload(@RequestBody MultipartFile imgFile) {
         String originalFilename = imgFile.getOriginalFilename();
         if (originalFilename == null || originalFilename.length() == 0){
@@ -91,6 +95,7 @@ public class SetmealController {
     }
 
     @RequestMapping("findById")
+    @PreAuthorize("hasAuthority('SETMEAL_QUERY')")
     public Result findById(Integer id) {
         Setmeal setmeal = setmealService.findById(id);
         if (setmeal != null) {
@@ -101,12 +106,14 @@ public class SetmealController {
     }
 
     @RequestMapping("findCheckGroupIdsBySetmealId")
+    @PreAuthorize("hasAuthority('SETMEAL_QUERY')")
     public List<Integer> findCheckGroupIdsBySetmealId(Integer id) {
         return setmealService.findCheckGroupIdsBySetmealId(id);
     }
 
 
     @RequestMapping("findByPage")
+    @PreAuthorize("hasAuthority('SETMEAL_QUERY')")
     public PageResult findByPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = setmealService.findByPage(queryPageBean);
         if (pageResult.getRows().size() == 0) {
@@ -119,6 +126,7 @@ public class SetmealController {
     }
 
     @RequestMapping("delSetmealById")
+    @PreAuthorize("hasAuthority('SETMEAL_DELETE')")
     public Result delSetmealById(Integer id) {
         try {
             setmealService.delSetmealById(id);

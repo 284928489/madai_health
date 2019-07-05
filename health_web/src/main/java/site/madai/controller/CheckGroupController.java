@@ -1,6 +1,7 @@
 package site.madai.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ public class CheckGroupController {
     private CheckGroupService checkGroupService;
 
     @RequestMapping("findAll")
+    @PreAuthorize("hasAuthority('CHECKGROUP_QUERY')")
     public Result findAll() {
         List<Setmeal> checkGrouplist = checkGroupService.findAll();
         if (checkGrouplist != null && checkGrouplist.size() > 0){
@@ -38,6 +40,7 @@ public class CheckGroupController {
     }
 
     @RequestMapping("delCheckgroupById")
+    @PreAuthorize("hasAuthority('CHECKGROUP_DELETE')")
     public Result delCheckgroupById(Integer id) {
         try {
             checkGroupService.delCheckgroupById(id);
@@ -55,6 +58,7 @@ public class CheckGroupController {
      * 编辑
      */
     @RequestMapping("edit")
+    @PreAuthorize("hasAuthority('CHECKGROUP_EDIT')")
     public Result edit(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         try {
             checkGroupService.edit(checkGroup, checkitemIds);
@@ -68,11 +72,13 @@ public class CheckGroupController {
      * 根据检查组合id查询对应的所有检查项id
      */
     @RequestMapping("findCheckItemIdsByCheckGroupId")
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     public List<Integer> findCheckItemIdsByCheckGroupId(Integer id) {
         return checkGroupService.findCheckItemIdsByCheckGroupId(id);
     }
 
     @RequestMapping("findById")
+    @PreAuthorize("hasAuthority('CHECKGROUP_QUERY')")
     public Result findById(Integer id) {
         CheckGroup checkGroup = checkGroupService.findById(id);
         if (checkGroup != null) {
@@ -84,6 +90,7 @@ public class CheckGroupController {
     }
 
     @RequestMapping("add")
+    @PreAuthorize("hasAuthority('CHECKGROUP_ADD')")
     public Result add(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         try {
             checkGroupService.add(checkGroup, checkitemIds);
@@ -96,6 +103,7 @@ public class CheckGroupController {
     }
 
     @RequestMapping("findPage")
+    @PreAuthorize("hasAuthority('CHECKGROUP_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = checkGroupService.queryPage(queryPageBean);
         if (pageResult.getRows().size() == 0) {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.madai.dao.UserDao">
+    <sql id="all">
+`id`, `birthday`, `gender`, `username`, `password`, `remark`, `station`, `telephone`
+    </sql>
+
+    <!--映射基本属性-->
+    <resultMap id="baseMap" type="User">
+        <id column="id" property="id"/>
+        <result column="birthday" property="birthday"/>
+        <result column="gender" property="gender"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="remark" property="remark"/>
+        <result column="station" property="station"/>
+        <result column="telephone" property="telephone"/>
+    </resultMap>
+
+    <!--一对一，一对多-->
+    <resultMap id="findByUsernameMap" type="User" extends="baseMap">
+        <collection
+                property="roles"
+                column="id"
+                ofType="role"
+                select="site.madai.dao.RoleDao.findRoleListByUserId"/>
+        <!--方法的全名称-->
+        <!--com.itheima.dao.RoleDao.findRoleListByUserId(Integer userId)-->
+    </resultMap>
+
+    <select id="findByUsername" parameterType="string" resultMap="findByUsernameMap">
+        select
+        <include refid="all"/>
+        from t_user
+        where username = #{username}
+    </select>
+</mapper>

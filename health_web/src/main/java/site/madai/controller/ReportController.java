@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.madai.constant.MessageConstant;
@@ -45,7 +46,8 @@ public class ReportController {
      *
      * @return
      */
-    @RequestMapping("/getBusinessReportData")
+    @RequestMapping("getBusinessReportData")
+    @PreAuthorize("hasAuthority('REPORT_VIEW')")
     public Result getBusinessReportData() {
         try {
             Map<String, Object> result = reportService.getBusinessReport();
@@ -62,6 +64,7 @@ public class ReportController {
      * @return
      */
     @RequestMapping("getSetmealReport")
+    @PreAuthorize("hasAuthority('REPORT_VIEW')")
     public Result getSetmealReport() {
         List<Map<String, Object>> list = setmealService.findSetmealCount();
 
@@ -84,6 +87,7 @@ public class ReportController {
      * @return
      */
     @RequestMapping("getMemberReport")
+    @PreAuthorize("hasAuthority('REPORT_VIEW')")
     public Result getMemberReport() {
         Calendar calendar = Calendar.getInstance();
         //获得当前日期之前12个月的日期
@@ -110,6 +114,7 @@ public class ReportController {
      * @return
      */
     @RequestMapping("exportBusinessReport")
+    @PreAuthorize("hasAuthority('REPORT_VIEW')")
     public Result exportBusinessReport(HttpServletRequest request, HttpServletResponse response) {
         try {
             //远程调用报表服务获取报表数据

@@ -1,6 +1,7 @@
 package site.madai.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,7 @@ public class CheckItemController {
     private CheckItemService checkItemService;
 
     @RequestMapping("add")
+    @PreAuthorize("hasAuthority('CHECKITEM_ADD')")
     public Result add(@RequestBody CheckItem checkItem) {
         try {
             checkItemService.add(checkItem);
@@ -39,6 +41,7 @@ public class CheckItemController {
     }
 
     @RequestMapping("findPage")
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = checkItemService.queryPage(queryPageBean);
         if (pageResult.getRows().size() == 0) {
@@ -51,12 +54,14 @@ public class CheckItemController {
     }
 
     @RequestMapping("findById")
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     public Result findById(Integer id) {
         CheckItem checkItem = checkItemService.findById(id);
         return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItem);
     }
 
     @RequestMapping("update")
+    @PreAuthorize("hasAuthority('CHECKITEM_EDIT')")
     public Result update(@RequestBody CheckItem checkItem) {
         try {
             checkItemService.update(checkItem);
@@ -67,6 +72,7 @@ public class CheckItemController {
         }
     }
 
+    @PreAuthorize("hasAuthority('CHECKITEM_DELETE')")
     @RequestMapping("delById")
     public Result delById(Integer id) {
         try {
@@ -86,6 +92,7 @@ public class CheckItemController {
      * @return 返回类型 Result
      */
     @RequestMapping("findAll")
+    @PreAuthorize("hasAuthority('CHECKITEM_QUERY')")
     public Result findAll() {
         List<CheckItem> checkItemList = checkItemService.findAll();
         if (checkItemList != null && checkItemList.size() > 0) {

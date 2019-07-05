@@ -40,7 +40,7 @@
                             <div class="avatar-wrapper">
                                 <img src="../img/user2-160x160.jpg" class="user-avatar">
                                 <span class="fx-span-red-bars1-span">
-                                    Jay.Liu
+                                    {{username}}
                                 </span>
                             </div>
                             <el-dropdown-menu slot="dropdown">
@@ -48,7 +48,9 @@
                                     <span style="display:block;">修改密码</span>
                                 </el-dropdown-item>
                                 <el-dropdown-item divided>
+                                    <a href="/logout.do">
                                         <span style="display:block;">退出</span>
+                                    </a>
                                     </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
@@ -83,13 +85,28 @@
     </div>
 </body>
 <!-- 引入组件库 -->
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
 <script src="../js/vue.js"></script>
 <script src="../plugins/elementui/index.js"></script>
-<script type="text/javascript" src="../js/jquery.min.js"></script>
 <script>
     new Vue({
         el: '#app',
+        created(){
+            this.findUsername();
+        },
+        methods:{
+            findUsername(){
+                //ajax发送请求，查询用户名
+                axios.get("/user/findUsername.do").then((res)=>{
+                    this.username = res.data.data;
+                }).catch((err)=>{
+                    console.log(err);
+                });
+            }
+        },
         data:{
+            username:"",
             menuList:[
                 {
                     "path": "1",
@@ -133,31 +150,31 @@
                         {
                             "path": "/3-1",
                             "title": "预约列表",
-                            "linkUrl":"pages/ordersettinglist.html",
+                            "linkUrl":"/pages/ordersettinglist.html",
                             "children":[]
                         },
                         {
                             "path": "/3-2",
                             "title": "预约设置",
-                            "linkUrl":"pages/ordersetting.html",
+                            "linkUrl":"/pages/ordersetting.html",
                             "children":[]
                         },
                         {
                             "path": "/3-3",
                             "title": "套餐管理",
-                            "linkUrl":"pages/setmeal.html",
+                            "linkUrl":"/pages/setmeal.html",
                             "children":[]
                         },
                         {
                             "path": "/3-4",
                             "title": "检查组管理",
-                            "linkUrl":"pages/checkgroup.html",
+                            "linkUrl":"/pages/checkgroup.html",
                             "children":[]
                         },
                         {
                             "path": "/3-5",
                             "title": "检查项管理",
-                            "linkUrl":"pages/checkitem.html",
+                            "linkUrl":"/pages/checkitem.html",
                             "children":[]
                         },
                     ]
@@ -170,7 +187,7 @@
                         {
                             "path": "/4-1",
                             "title": "中医体质辨识",
-                            "linkUrl":"pages/all-medical-list.html",
+                            "linkUrl":"/pages/all-medical-list.html",
                             "children":[]
                         },
                     ]
@@ -183,19 +200,19 @@
                         {
                             "path": "/5-1",
                             "title": "会员数量",
-                            "linkUrl":"pages/report_member.html",
+                            "linkUrl":"/pages/report_member.html",
                             "children":[]
                         },
                         {
                             "path": "/5-2",
                             "title": "运营数据",
-                            "linkUrl":"pages/report_business.html",
+                            "linkUrl":"/pages/report_business.html",
                             "children":[]
                         },
                         {
                             "path": "/5-3",
                             "title": "套餐占比",
-                            "linkUrl":"pages/report_setmeal.html",
+                            "linkUrl":"/pages/report_setmeal.html",
                             "children":[]
                         },
 
