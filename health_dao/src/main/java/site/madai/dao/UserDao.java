@@ -1,5 +1,6 @@
 package site.madai.dao;
 
+import org.apache.ibatis.annotations.Param;
 import site.madai.pojo.User;
 
 /**
@@ -11,5 +12,5 @@ import site.madai.pojo.User;
  */
 public interface UserDao {
 
-    User findByUsername(String username);
+    User findByUsername(@Param("username") String username);
 }

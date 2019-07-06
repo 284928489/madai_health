@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * 菜单
+ * @author wangshaodi
  */
 public class Menu implements Serializable {
     private Integer id;

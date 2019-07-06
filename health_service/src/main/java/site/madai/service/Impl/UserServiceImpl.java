@@ -2,10 +2,15 @@ package site.madai.service.Impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import site.madai.dao.UserDao;
+import site.madai.pojo.Menu;
+import site.madai.pojo.Role;
 import site.madai.pojo.User;
 import site.madai.service.UserService;
+
+import java.util.List;
 
 /**
  * @Project: site.madai.service.Impl
@@ -31,6 +36,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true,propagation = Propagation.SUPPORTS)
     public User findByUsername(String username) {
 
         return userDao.findByUsername(username);

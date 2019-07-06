@@ -1,5 +1,6 @@
 package site.madai.dao;
 
+import org.apache.ibatis.annotations.Param;
 import site.madai.pojo.Role;
 
 import java.util.List;
@@ -12,5 +13,5 @@ import java.util.List;
  * @Version: 1.0
  */
 public interface RoleDao {
-    List<Role> findRoleListByUserId(Integer id);
+    List<Role> findRoleListByUserId(@Param("userId") Integer userId);
 }
