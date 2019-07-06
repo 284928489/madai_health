@@ -44,13 +44,13 @@ public class CheckGroupController {
     public Result delCheckgroupById(Integer id) {
         try {
             checkGroupService.delCheckgroupById(id);
-            return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+            return new Result(true, MessageConstant.DELETE_CHECKGROUP_SUCCESS);
         } catch (RuntimeException e) {
             e.printStackTrace();
             return new Result(false, e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.EDIT_CHECKGROUP_FAIL);
+            return new Result(false, MessageConstant.DELETE_CHECKGROUP_FAIL);
         }
     }
 

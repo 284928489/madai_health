@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface RoleDao {
     List<Role> findRoleListByUserId(@Param("userId") Integer userId);
+
+    List<Role> findAll();
 }

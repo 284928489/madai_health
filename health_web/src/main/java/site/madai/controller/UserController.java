@@ -1,13 +1,18 @@
 package site.madai.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.madai.constant.MessageConstant;
+import site.madai.entity.PageResult;
+import site.madai.entity.QueryPageBean;
 import site.madai.entity.Result;
 import site.madai.pojo.Menu;
 import site.madai.service.MenuService;
@@ -32,6 +37,9 @@ public class UserController {
 
     @Reference
     private MenuService menuService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     /**
      * 获取用户名流程
@@ -75,5 +83,75 @@ public class UserController {
         List<Menu> menuList = menuService.getMenuListByUsername(username);
         return new Result(true,"asdf",menuList);
 
+    }
+
+    @RequestMapping("findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
+        PageResult pageResult = userService.queryPage(queryPageBean);
+        if (pageResult.getRows().size() == 0) {
+            if (queryPageBean.getQueryString() != null && queryPageBean.getQueryString().length() > 0) {
+                queryPageBean.setCurrentPage(1);
+                pageResult = userService.queryPage(queryPageBean);
+            }
+        }
+        return pageResult;
+    }
+
+    @RequestMapping("add")
+    public Result add(@RequestBody site.madai.pojo.User user,
+                      Integer[] roleIds) {
+        try {
+            // 将前端传来的明文密码通过security提供的加密工具类加密一下
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userService.add(user, roleIds);
+        } catch (Exception e) {
+            //新增失败
+            return new Result(false, MessageConstant.ADD_USER_FAIL);
+        }
+        //新增成功
+        return new Result(true, MessageConstant.ADD_USER_SUCCESS);
+    }
+
+    @RequestMapping("findById")
+    public Result findById(Integer id){
+        site.madai.pojo.User user = userService.findById(id);
+        if (user != null) {
+            Result result = new Result(true,
+                    MessageConstant.QUERY_USER_SUCCESS);
+            result.setData(user);
+            return result;
+        }
+        return new Result(false, MessageConstant.QUERY_USER_FAIL);
+    }
+
+    @RequestMapping("findRoleIdsByUserId")
+    public List<Integer> findRoleIdsByUserId(Integer id){
+        return userService.findRoleIdsByUserId(id);
+    }
+
+    @RequestMapping("edit")
+    public Result edit(@RequestBody site.madai.pojo.User user,
+                       Integer[] roleIds){
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userService.edit(user, roleIds);
+        } catch (Exception e) {
+            return new Result(false, MessageConstant.EDIT_USER_FAIL);
+        }
+        return new Result(true, MessageConstant.EDIT_USER_SUCCESS);
+    }
+
+    @RequestMapping("delUserById")
+    public Result delUserById(Integer id){
+        try {
+            userService.delUserById(id);
+            return new Result(true, MessageConstant.DELETE_USER_SUCCESS);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new Result(false, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_USER_FAIL);
+        }
     }
 }

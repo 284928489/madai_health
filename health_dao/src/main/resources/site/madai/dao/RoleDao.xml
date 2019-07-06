@@ -33,4 +33,10 @@
         from t_role where id in
         (select role_id from t_user_role where user_id = #{userId})
     </select>
+
+    <select id="findAll" resultType="role">
+        select
+        <include refid="all"/>
+        from t_role
+    </select>
 </mapper>

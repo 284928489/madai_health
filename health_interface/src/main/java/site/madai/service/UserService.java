@@ -1,5 +1,7 @@
 package site.madai.service;
 
+import site.madai.entity.PageResult;
+import site.madai.entity.QueryPageBean;
 import site.madai.pojo.Menu;
 import site.madai.pojo.User;
 
@@ -14,5 +16,17 @@ import java.util.List;
  */
 public interface UserService {
 
+    List<Integer> findRoleIdsByUserId(Integer id);
+
     User findByUsername(String username);
+
+    PageResult queryPage(QueryPageBean queryPageBean);
+
+    void add(User user, Integer[] roleIds);
+
+    User findById(Integer id);
+
+    void edit(User user, Integer[] roleIds);
+
+    void delUserById(Integer id);
 }
