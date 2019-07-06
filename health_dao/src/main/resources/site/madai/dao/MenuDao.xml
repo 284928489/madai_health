@@ -7,26 +7,6 @@
         `id`, `name`, `linkUrl`, `path`, `priority`, `icon`, `description`, `parentMenuId`
     </sql>
 
-    <!--基本属性-->
-    <resultMap id="baseMap" type="menu">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="linkUrl" property="linkUrl"/>
-        <result column="path" property="path"/>
-        <result column="priority" property="priority"/>
-        <result column="icon" property="icon"/>
-        <result column="description" property="description"/>
-        <result column="parentMenuId" property="parentMenuId"/>
-        <result column="level" property="level"/>
-    </resultMap>
-
-    <!--菜单自关联属性-->
-    <resultMap id="getMenusByRoleIdMap" type="menu"
-               extends="baseMap">
-        <collection property="children" column="id" ofType="menu"
-                    select="getSMenusByFMenuId"/>
-    </resultMap>
-
     <select id="getMenusByUsername" parameterType="string"
             resultMap="getMenusByRoleIdMap">
         select
@@ -37,11 +17,69 @@
         username = #{username})))
     </select>
 
+    <!--二级菜单属性-->
+    <resultMap id="SbaseMap" type="map">
+        <result column="linkUrl" property="linkUrl"/>
+        <result column="name" property="title"/>
+        <result column="path" property="path"/>
+    </resultMap>
     <select id="getSMenusByFMenuId" parameterType="int"
-            resultType="menu">
+            resultMap="SbaseMap">
         select
         <include refid="all"/>
         from t_menu where level = 2 and parentMenuId = #{parentMenuId}
     </select>
+
+    <!--基本属性-->
+    <resultMap id="baseMap" type="map">
+        <id column="id" property="id"/>
+        <result column="name" property="title"/>
+        <result column="icon" property="icon"/>
+        <result column="path" property="path"/>
+    </resultMap>
+    <!--菜单自关联属性-->
+    <resultMap id="getMenusByRoleIdMap" type="map"
+               extends="baseMap">
+        <collection property="children" column="id" ofType="map"
+                    select="getSMenusByFMenuId"/>
+    </resultMap>
+    <!--
+     {
+                    "path": "3",
+                    "title": "预约管理",
+                    "icon":"fa-tty",
+                    "children": [
+                        {
+                            "path": "/3-1",
+                            "title": "预约列表",
+                            "linkUrl":"/pages/ordersettinglist.html",
+                            "children":[]
+                        },
+                        {
+                            "path": "/3-2",
+                            "title": "预约设置",
+                            "linkUrl":"/pages/ordersetting.html",
+                            "children":[]
+                        },
+                        {
+                            "path": "/3-3",
+                            "title": "套餐管理",
+                            "linkUrl":"/pages/setmeal.html",
+                            "children":[]
+                        },
+                        {
+                            "path": "/3-4",
+                            "title": "检查组管理",
+                            "linkUrl":"/pages/checkgroup.html",
+                            "children":[]
+                        },
+                        {
+                            "path": "/3-5",
+                            "title": "检查项管理",
+                            "linkUrl":"/pages/checkitem.html",
+                            "children":[]
+                        },
+                    ]
+                },-->
 
 </mapper>

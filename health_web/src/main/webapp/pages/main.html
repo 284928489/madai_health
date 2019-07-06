@@ -94,6 +94,7 @@
         el: '#app',
         created(){
             this.findUsername();
+            this.getMenusbyUsername();
         },
         methods:{
             findUsername(){
@@ -103,7 +104,16 @@
                 }).catch((err)=>{
                     console.log(err);
                 });
+            },
+            getMenusbyUsername(){
+                axios.get("/user/getUserMenus.do").then((res)=>{
+                    this.menuList = res.data.data;
+                    console.log(res.data);
+                }).catch((err)=>{
+                    console.log(err);
+                })
             }
+
         },
         data:{
             username:"",
@@ -116,7 +126,7 @@
                         {
                             "path": "/1-1",
                             "title": "总控台",
-                            "linkUrl":"pages/overview.html",
+                            "linkUrl":"/pages/overview.html",
                         }
                     ]
                 },
