@@ -65,10 +65,10 @@ public class CheckItemController {
     public Result update(@RequestBody CheckItem checkItem) {
         try {
             checkItemService.update(checkItem);
-            return new Result(true, MessageConstant.ADD_CHECKITEM_SUCCESS);
+            return new Result(true, MessageConstant.EDIT_CHECKITEM_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.ADD_CHECKITEM_FAIL);
+            return new Result(false, MessageConstant.EDIT_CHECKITEM_FAIL);
         }
     }
 

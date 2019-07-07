@@ -7,7 +7,7 @@
         select * from t_setmeal
         <where>
             <if test="value != null and value.length > 0">
-                code = #{value} or name = #{value}
+                code like CONCAT('%',#{value},'%') or name like CONCAT('%',#{value},'%')
             </if>
         </where>
     </select>

@@ -13,4 +13,51 @@
         from t_permission where id in
         (select permission_id from t_role_permission where role_id = #{roleId})
     </select>
+
+    <!--分页条件查询-->
+    <select id="findByCondition" parameterType="string" resultType="permission">
+        select * from t_permission
+        <where>
+            <if test="value != null and value.length > 0">
+                name like CONCAT('%',#{value},'%') or keyword like CONCAT('%',#{value},'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="add" parameterType="permission">
+INSERT INTO `t_permission` (`name`, `keyword`, `description`)
+VALUES
+(#{name},#{keyword},#{description})
+    </insert>
+
+    <select id="findById" parameterType="int" resultType="permission">
+        select
+        <include refid="all"/>
+        from t_permission where id = #{id}
+    </select>
+
+    <update id="edit" parameterType="permission">
+        update t_permission
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="keyword != null">
+                keyword = #{keyword},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getRoleCountFrom_t_role_permissionByPermissionId"
+            parameterType="int" resultType="long">
+        select count(0) from t_role_permission where permission_id = #{id}
+    </select>
+
+    <delete id="delPermissionById" parameterType="int">
+        delete from t_permission where id = #{id}
+    </delete>
 </mapper>
