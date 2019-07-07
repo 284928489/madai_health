@@ -20,12 +20,22 @@ public class Menu implements Serializable {
     private String description;
     //图标
     private String icon;
+    //菜单级别
+    private Integer level;
     //角色集合
     private Set<Role> roles = new HashSet<Role>(0);
     //子菜单集合
     private List<Menu> children = new ArrayList<>();
     //父菜单id
     private Integer parentMenuId;
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public Integer getId() {
         return id;

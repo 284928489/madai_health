@@ -88,4 +88,14 @@ public class MessageConstant {
     public static final String EDIT_PERMISSION_SUCCESS = "编辑权限信息成功";
     public static final String DELETE_PERMISSION_SUCCESS = "删除权限信息成功";
     public static final String DELETE_PERMISSION_FAIL = "删除权限信息失败";
+    public static final String QUERY_PARENTMENU_FAIL = "查询父级菜单项失败";
+    public static final String QUERY_PARENTMENU_SUCCESS = "查询父级菜单项成功";
+    public static final String ADD_MENU_FAIL = "添加菜单失败";
+    public static final String ADD_MENU_SUCCESS = "添加菜单成功";
+    public static final String QUERY_MENU_FAIL = "查询菜单失败";
+    public static final String QUERY_MENU_SUCCESS = "查询菜单成功";
+    public static final String EDIT_MENU_SUCCESS = "编辑菜单成功";
+    public static final String EDIT_MENU_FAIL = "编辑菜单成功";
+    public static final String DELETE_MENU_FAIL = "删除菜单失败";
+    public static final String DELETE_MENU_SUCCESS = "删除菜单成功";
 }

@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.madai.dao.MenuDao">
     <sql id="all">
-        `id`, `name`, `linkUrl`, `path`, `priority`, `icon`, `description`, `parentMenuId`
+        `id`, `name`, `linkUrl`, `path`, `priority`, `icon`, `description`,
+        `parentMenuId`,`level`
     </sql>
 
     <select id="getMenusByUsername" parameterType="string"
@@ -43,43 +44,66 @@
         <collection property="children" column="id" ofType="map"
                     select="getSMenusByFMenuId"/>
     </resultMap>
-    <!--
-     {
-                    "path": "3",
-                    "title": "预约管理",
-                    "icon":"fa-tty",
-                    "children": [
-                        {
-                            "path": "/3-1",
-                            "title": "预约列表",
-                            "linkUrl":"/pages/ordersettinglist.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/3-2",
-                            "title": "预约设置",
-                            "linkUrl":"/pages/ordersetting.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/3-3",
-                            "title": "套餐管理",
-                            "linkUrl":"/pages/setmeal.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/3-4",
-                            "title": "检查组管理",
-                            "linkUrl":"/pages/checkgroup.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/3-5",
-                            "title": "检查项管理",
-                            "linkUrl":"/pages/checkitem.html",
-                            "children":[]
-                        },
-                    ]
-                },-->
+
+    <!--分页条件查询-->
+    <select id="findByCondition" parameterType="string" resultType="HashMap">
+        select m.id id, m.name name, m.linkUrl linkUrl, m.icon icon, m.description description, m.level level,n.name parentName from t_menu m left join t_menu n on m.`parentMenuId` = n.`id`
+        <where>
+            <if test="value != null and value.length > 0">
+                m.name like CONCAT('%',#{value},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllParentmenu" resultType="menu">
+        select
+        <include refid="all"/>
+        from t_menu where level = 1
+    </select>
+
+    <select id="getMenuCountByLevelAndParentId" parameterType="int"
+            resultType="int">
+        select count(0) from t_menu
+        <where>
+            <if test="level != null">
+                level = #{level}
+            </if>
+            <if test="parentMenuId != null">
+                and parentMenuId = #{parentMenuId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="add" parameterType="menu">
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `t_menu` (`name`, `linkUrl`, `path`, `priority`, `icon`, `description`, `parentMenuId`, `level`)
+VALUES
+	(#{name},#{linkUrl},#{path},#{priority},#{icon},#{description},#{parentMenuId},#{level});
+    </insert>
+
+    <select id="getMenuById" parameterType="int" resultType="menu">
+        select
+        <include refid="all"/>
+        from t_menu where id = #{parentMenuId}
+    </select>
+
+    <select id="findparentMenuIdsById" parameterType="int"
+            resultType="int">
+        select parentMenuId from t_menu where id = #{id};
+    </select>
+
+    <delete id="delMenuAndRoleBymenuId" parameterType="int">
+        delete from t_role_menu where menu_id = #{menu_id}
+    </delete>
+
+    <delete id="delMenuById" parameterType="int">
+        delete from t_menu where id = #{id}
+    </delete>
+
+    <select id="getchildmenuCountBy" parameterType="int" resultType="int">
+        select count(0) from t_menu where parentMenuId = #{id};
+    </select>
 
 </mapper>
