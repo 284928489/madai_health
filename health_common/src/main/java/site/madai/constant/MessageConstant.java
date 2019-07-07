@@ -71,7 +71,7 @@ public class MessageConstant {
     public static final String GET_SETMEAL_LIST_SUCCESS = "查询套餐列表数据成功";
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
     public static final String QUERY_ROLE_SUCCESS = "查询角色信息成功";
-    public static final String QUERY_ROLE_FILE = "查询角色信息失败";
+    public static final String QUERY_ROLE_FAIL = "查询角色信息失败";
     public static final String ADD_USER_SUCCESS = "添加员工成功";
     public static final String ADD_USER_FAIL = "添加员工失败";
     public static final String QUERY_USER_FAIL = "查询用户失败";
@@ -79,7 +79,7 @@ public class MessageConstant {
     public static final String EDIT_USER_SUCCESS = "编辑用户成功";
     public static final String EDIT_USER_FAIL = "编辑用户成功";
     public static final String DELETE_USER_FAIL = "删除用户失败";
-    public static final String DELETE_USER_SUCCESS = "删除用户失败";
+    public static final String DELETE_USER_SUCCESS = "删除用户成功";
     public static final String ADD_PERMISSION_SUCCESS = "添加权限成功";
     public static final String ADD_PERMISSION_FAIL = "添加权限失败";
     public static final String QUERY_PERMISSION_SUCCESS = "查询权限成功";
@@ -98,4 +98,10 @@ public class MessageConstant {
     public static final String EDIT_MENU_FAIL = "编辑菜单成功";
     public static final String DELETE_MENU_FAIL = "删除菜单失败";
     public static final String DELETE_MENU_SUCCESS = "删除菜单成功";
+    public static final String ADD_ROLE_FAIL = "添加角色失败";
+    public static final String ADD_ROLE_SUCCESS = "添加角色成功";
+    public static final String EDIT_ROLE_SUCCESS = "编辑角色成功";
+    public static final String EDIT_ROLE_FAIL = "编辑角色失败";
+    public static final String DELETE_ROLE_FAIL = "删除角色失败";
+    public static final String DELETE_ROLE_SUCCESS = "删除角色成功";
 }

@@ -36,4 +36,6 @@ public interface MenuDao {
     void delMenuById(Integer id);
 
     int getchildmenuCountBy(Integer id);
+
+    List<Map<String,Object>> findAllMenu();
 }

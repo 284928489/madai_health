@@ -11,6 +11,8 @@ import site.madai.entity.QueryPageBean;
 import site.madai.pojo.Permission;
 import site.madai.service.PermissionService;
 
+import java.util.List;
+
 /**
  * @Project: site.madai.service.Impl
  * @Author: ShaoDi Wang
@@ -59,5 +61,10 @@ public class PermissionServiceImpl implements PermissionService {
             throw new RuntimeException("该权限被角色关联，不能被删除");
         }
         permissionDao.delPermissionById(id);
+    }
+
+    @Override
+    public List<Permission> findAllPermission() {
+        return permissionDao.findAllPermission();
     }
 }

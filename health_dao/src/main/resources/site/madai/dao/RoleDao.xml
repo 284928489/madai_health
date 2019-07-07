@@ -39,4 +39,82 @@
         <include refid="all"/>
         from t_role
     </select>
+
+    <select id="findByCondition" parameterType="string" resultType="role">
+        select * from t_role
+        <where>
+            <if test="value != null and value.length > 0">
+                name like CONCAT('%',#{value},'%') or keyword like CONCAT('%',#{value},'%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="add" parameterType="role">
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO `t_role` (`name`, `keyword`, `description`)
+VALUES
+	(#{name},#{keyword},#{description});
+    </insert>
+
+    <insert id="setRoleAndPermissions" parameterType="map">
+        INSERT INTO `t_role_permission` (`role_id`, `permission_id`)
+VALUES
+(#{role_id},#{permission_id})
+    </insert>
+
+    <insert id="setRoleAndMenus" parameterType="map">
+        INSERT INTO `t_role_menu` (`role_id`, `menu_id`)
+VALUES
+(#{role_id},#{menu_id})
+    </insert>
+
+    <select id="getRoleById" parameterType="int" resultType="role">
+        select
+        <include refid="all"/>
+        from t_role where id = #{id}
+    </select>
+
+    <select id="findPermissionIdsByRoleId" parameterType="int" resultType="int">
+select permission_id from t_role_permission where role_id = #{id}
+    </select>
+
+    <select id="findMenuIdsByRoleId" parameterType="int"
+            resultType="int">
+        select menu_id from t_role_menu where role_id = #{id}
+    </select>
+
+    <delete id="delRoleAndPermissionsByroleId" parameterType="int">
+        delete from t_role_permission where role_id = #{id}
+    </delete>
+
+    <delete id="delRoleAndMenusByroleId" parameterType="int">
+        delete from t_role_menu where role_id = #{id}
+    </delete>
+
+    <update id="updateRole" parameterType="role">
+        update t_role
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="keyword != null">
+                keyword = #{keyword},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getUserAndRoleCountByroleId" parameterType="int"
+            resultType="long">
+        select count(0) from t_user_role where role_id = #{id}
+    </select>
+
+    <delete id="delRoleByroleId" parameterType="int">
+        delete from t_role where id = #{id}
+    </delete>
 </mapper>

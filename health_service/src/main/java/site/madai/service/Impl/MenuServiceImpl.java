@@ -116,4 +116,9 @@ public class MenuServiceImpl implements MenuService {
     public List<Integer> findparentMenuIdsById(Integer id) {
         return menuDao.findparentMenuIdsById(id);
     }
+
+    @Override
+    public List<Map<String,Object>> findAllMenu() {
+        return menuDao.findAllMenu();
+    }
 }

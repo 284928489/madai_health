@@ -5,6 +5,7 @@ import site.madai.entity.QueryPageBean;
 import site.madai.pojo.Menu;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Project: site.madai.service
@@ -30,4 +31,6 @@ public interface MenuService {
     void edit(Menu menu, Integer[] parentMenuIds) throws Exception;
 
     void delMenuById(Integer id);
+
+    List<Map<String,Object>> findAllMenu();
 }

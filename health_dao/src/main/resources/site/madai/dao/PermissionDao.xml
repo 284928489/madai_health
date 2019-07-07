@@ -60,4 +60,10 @@ VALUES
     <delete id="delPermissionById" parameterType="int">
         delete from t_permission where id = #{id}
     </delete>
+
+    <select id="findAllPermission" resultType="permission">
+        select
+        <include refid="all"/>
+        from t_permission
+    </select>
 </mapper>

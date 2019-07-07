@@ -11,6 +11,8 @@ import site.madai.entity.Result;
 import site.madai.pojo.Permission;
 import site.madai.service.PermissionService;
 
+import java.util.List;
+
 /**
  * @Project: site.madai.controller
  * @Author: ShaoDi Wang
@@ -84,5 +86,10 @@ public class PermissionController {
             e.printStackTrace();
             return new Result(false, MessageConstant.DELETE_PERMISSION_FAIL);
         }
+    }
+
+    @RequestMapping("findAllPermission")
+    public List<Permission> findAllPermission(){
+        return permissionService.findAllPermission();
     }
 }

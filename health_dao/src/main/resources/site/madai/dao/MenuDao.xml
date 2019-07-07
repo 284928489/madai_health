@@ -106,4 +106,8 @@ VALUES
         select count(0) from t_menu where parentMenuId = #{id};
     </select>
 
+    <select id="findAllMenu" resultType="HashMap">
+        select m.`id`, m.`name`, m.`linkUrl`, m.`path`, m.`priority`, m.`icon`, m.`description`, m.`parentMenuId`, m.`level`,n.`name` parentName from t_menu m left join t_menu n on n.id = m.`parentMenuId`
+    </select>
+
 </mapper>

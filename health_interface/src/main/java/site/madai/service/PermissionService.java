@@ -4,6 +4,8 @@ import site.madai.entity.PageResult;
 import site.madai.entity.QueryPageBean;
 import site.madai.pojo.Permission;
 
+import java.util.List;
+
 /**
  * @Project: site.madai.service
  * @Author: ShaoDi Wang
@@ -21,4 +23,6 @@ public interface PermissionService {
     void edit(Permission permission);
 
     void delPermissionById(Integer id);
+
+    List<Permission> findAllPermission();
 }

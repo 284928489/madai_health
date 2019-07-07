@@ -27,4 +27,6 @@ public interface PermissionDao {
     long getRoleCountFrom_t_role_permissionByPermissionId(Integer id);
 
     void delPermissionById(Integer id);
+
+    List<Permission> findAllPermission();
 }

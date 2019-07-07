@@ -12,6 +12,7 @@ import site.madai.pojo.Menu;
 import site.madai.service.MenuService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Project: site.madai.controller
@@ -122,5 +123,10 @@ public class MenuController {
             e.printStackTrace();
             return new Result(false, MessageConstant.DELETE_MENU_FAIL);
         }
+    }
+
+    @RequestMapping("findAllMenu")
+    public List<Map<String,Object>> findAllMenu(){
+        return menuService.findAllMenu();
     }
 }
