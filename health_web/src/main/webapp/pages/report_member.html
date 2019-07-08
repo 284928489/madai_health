@@ -14,10 +14,6 @@
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="../css/fx.css">
         <!-- 引入组件库 -->
-        <script src="../js/vue.js"></script>
-        <script src="../plugins/elementui/index.js"></script>
-        <script type="text/javascript" src="../js/jquery.min.js"></script>
-        <script src="../js/axios-0.18.0.js"></script>
         <script src="../plugins/echarts/echarts.js"></script>
     </head>
     <body class="hold-transition">
@@ -47,16 +43,111 @@
             </div>
             <div class="app-container">
                 <div class="box">
-                     <!--为 ECharts 准备一个具备大小（宽高）的 DOM -->
-                    <div id="chart1" style="height:510px;"></div>
+                    <template>
+                    <div style="margin-bottom:20px">
+                        <el-date-picker
+                                v-model="dateRangeStr"
+                                type="daterange"
+                                align="right"
+                                unlink-panels
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期"
+                                :picker-options="pickerOptions">
+                        </el-date-picker>
+                        <el-button @click="findPage()" class="butT btn-fx-bubble">查询
+                        </el-button>
+                    </div>
+                    </template>
+                    <!--为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                    <div id="chart1" style="height:450px;"></div>
                 </div>
             </div>
         </div>
     </body>
     <!-- 引入组件库 -->
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart1 = echarts.init(document.getElementById('chart1'));
+        // var myChart1 = echarts.init(document.getElementById('chart1'));
+
+
+        var vue = new Vue({
+            el: '#app',
+            data: {
+                myChart: '',
+                dateRangeStr:null,
+                pickerOptions: {
+                    shortcuts: [{
+                        text: '最近一周',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近一个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近三个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
+            },
+            created () {
+            },
+            mounted () {
+                this.myChart =
+                    echarts.init(document.getElementById('chart1'));
+                this.findPage()
+            },
+            methods: {
+                findPage(){
+                    var params = {
+                        dateRangeList : this.dateRangeStr
+                    };
+                    axios.post("/report/getMemberReport.do",params).then((res)=>{
+                        this.myChart.setOption(
+                            {
+                                title: {
+                                    text: '会员数量'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data:['会员数量']
+                                },
+                                xAxis: {
+                                    data: res.data.data.months
+                                },
+                                yAxis: {
+                                    type:'value'
+                                },
+                                series: [{
+                                    name: '会员数量',
+                                    type: 'line',
+                                    data: res.data.data.memberCount
+                                }]
+                            });
+                    }).catch((err) => {
+                        this.$message.error(err.toString());
+                    });
+                }
+            }
+        });
 
         // 使用刚指定的配置项和数据显示图表。
         // option = {
@@ -76,30 +167,6 @@
         // };
         // myChart1.setOption(option);
 
-        axios.get("/report/getMemberReport.do").then((res)=>{
-            myChart1.setOption(
-                                {
-                                    title: {
-                                        text: '会员数量'
-                                    },
-                                    tooltip: {},
-                                    legend: {
-                                        data:['会员数量']
-                                    },
-                                    xAxis: {
-                                        data: res.data.data.months
-                                    },
-                                    yAxis: {
-                                        type:'value'
-                                    },
-                                    series: [{
-                                        name: '会员数量',
-                                        type: 'line',
-                                        data: res.data.data.memberCount
-                                    }]
-                                });
-        }).catch((err) => {
-            this.$message.error(err.toString());
-        });
+
     </script>
 </html>

@@ -5,13 +5,16 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.madai.constant.MessageConstant;
+import site.madai.entity.QueryPageBean;
 import site.madai.entity.Result;
 import site.madai.service.MemberService;
 import site.madai.service.ReportService;
 import site.madai.service.SetmealService;
+import site.madai.utils.DateUtils;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -88,15 +91,30 @@ public class ReportController {
      */
     @RequestMapping("getMemberReport")
     @PreAuthorize("hasAuthority('REPORT_VIEW')")
-    public Result getMemberReport() {
-        Calendar calendar = Calendar.getInstance();
-        //获得当前日期之前12个月的日期
-        calendar.add(Calendar.MONTH, -12);
-
+    public Result getMemberReport(@RequestBody QueryPageBean queryPageBean) {
+        // 如果前端传来了日期，则用前端传来的日期
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            calendar.add(Calendar.MONTH, 1);
-            list.add(new SimpleDateFormat("yyyy.MM").format(calendar.getTime()));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        if (queryPageBean.getDateRangeList() != null && queryPageBean.getDateRangeList().size() == 2){
+            String minDate =
+                    simpleDateFormat.format(queryPageBean.getDateRangeList().get(0));
+            String maxDate =
+                    simpleDateFormat.format(queryPageBean.getDateRangeList().get(1));
+            try {
+                list = DateUtils.getMonthBetween(minDate, maxDate, "yyyy.MM");
+            } catch (Exception e) {
+                return new Result(false,e.getMessage());
+            }
+
+        }else{
+            Calendar calendar = Calendar.getInstance();
+            //获得当前日期之前12个月的日期
+            calendar.add(Calendar.MONTH, -12);
+
+            for (int i = 0; i < 12; i++) {
+                calendar.add(Calendar.MONTH, 1);
+                list.add(new SimpleDateFormat("yyyy.MM").format(calendar.getTime()));
+            }
         }
 
         Map<String, Object> map = new HashMap<>();
